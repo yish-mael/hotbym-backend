@@ -5,7 +5,7 @@ class CountriesController {
 
     constructor() {}
 
-    static async getAllCountries(req:Request, res:Response)
+    static async getAllCountries(req: Request, res: Response)
     {
         try{
             const allCountries =  await CountryService.getAll();
@@ -17,7 +17,7 @@ class CountriesController {
         }
     }
 
-    static async getOneCountry(req:Request, res:Response)
+    static async getOneCountry(req: Request, res: Response)
     {
         try{
             const id =  parseInt(req.params.id);
@@ -31,11 +31,14 @@ class CountriesController {
         }
     }
 
-    static async createCountry(req: Request, res:Response)
+    static async createCountry(req: Request, res: Response)
     {
         try{
-            const { name, phoneCode, abbreviation, symbol } = req.body;
-            return await CountryService.create({});
+            const createdCountry = await CountryService.create(req.body);
+            return res.status(200).json({
+                message: "Country created successfully.",
+                data: createdCountry
+            });
         }catch(err){
             return res.status(500).json({
                 error: err
@@ -43,21 +46,35 @@ class CountriesController {
         }
     }
 
-    static async updateCountry(req:Request, res:Response)
+    static async updateCountry(req: Request, res: Response)
     {
         try{
-            
+            const id = parseInt(req.params.id);
+            const updatedCountry = await CountryService.update(id, req.body);
+            return res.status(200).json({
+                message: "Country updated successfully.",
+                data: updatedCountry
+            });
         }catch(err){
-
+            return res.status(500).json({
+                error: err
+            });
         }
     }
 
-    static async deleteCountry(req:Request, res:Response)
+    static async deleteCountry(req: Request, res: Response)
     {
         try{
-            
+            const id  =  parseInt(req.params.id);
+            const deletedCountry = await CountryService.delete(id);
+            return res.status(200).json({
+                message: "Country deleted successfully.",
+                data: deletedCountry
+            });
         }catch(err){
-
+            return res.status(500).json({
+                error: err
+            });
         }
     }
 }
