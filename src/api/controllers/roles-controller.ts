@@ -48,11 +48,29 @@ class RolesController {
     static async addPermissionsToRole(req: Request, res: Response)
     {
         try{
-            const roleId: number = req.body.roleId;
-            const permissionIds: [number] = req.body.permissions;
-
+            const id =  parseInt(req.body.id);
+            const permissions =  req.body.permissions;
+            await RoleService.addPermissions(id, permissions);
+            return res.status(200).json({
+                message: "Permissions added successfully.",
+            });
         }catch(err){
+            throw err;
+        }
+    }
 
+
+    static async removePermissionsFromRole(req: Request, res: Response)
+    {
+        try{
+            const id =  parseInt(req.body.id);
+            const permissions =  req.body.permissions;
+            await RoleService.removePermissions(id, permissions);
+            return res.status(200).json({
+                message: "Permissions removed successfully.",
+            });
+        }catch(err){
+            throw err;
         }
     }
 

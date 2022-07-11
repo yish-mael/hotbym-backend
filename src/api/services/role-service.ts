@@ -1,4 +1,4 @@
-import { RoleModel, PermissionModel } from "../models/";
+import { RoleModel, PermissionModel, RolePermissionModel } from "../models/";
 
 interface IRole {
     title: string,
@@ -18,9 +18,24 @@ class RoleService{
 
     static async getById(id: number)
     {
-        console.log(await RoleModel.findByPk(id));
         return await RoleModel.findByPk(id, {
             include: PermissionModel
+        });
+    }
+
+
+    static async addPermissions(id: number, permissions: [number])
+    {
+        return await permissions.map((item) => {
+            return RolePermissionModel.findOrCreate({ where: { roleId: id, permissionId: item } });
+        });
+    }
+
+
+    static async removePermissions(id: number, permissions: [number])
+    {
+        return await permissions.map((item) => {
+            return RolePermissionModel.destroy({ where: { roleId: id, permissionId: item } });
         });
     }
 
