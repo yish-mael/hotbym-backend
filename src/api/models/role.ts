@@ -1,5 +1,8 @@
 import { DataTypes, Model} from 'sequelize';
 import { sequelize } from '../../config/connection';
+import Permission from './Permission';
+import RolePermission from './RolePermission';
+
 
   class Role extends Model {
     declare id: number;
@@ -26,13 +29,13 @@ import { sequelize } from '../../config/connection';
     },
     description: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
 
   }, {
       tableName: "roles",
       sequelize
   });
+  
 
-
- export default Role;
+export default Role;

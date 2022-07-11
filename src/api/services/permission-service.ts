@@ -1,4 +1,4 @@
-import Permission from "../models/permission";
+import { PermissionModel } from "../models/";
 
 interface IPermission {
     title: string,
@@ -12,32 +12,32 @@ class PermissionService{
 
     static async getAll()
     {
-        return await Permission.findAll();
+        return await PermissionModel.findAll();
     }
 
 
     static async getById(id: number)
     {
-        return await Permission.findByPk(id);
+        return await PermissionModel.findByPk(id);
     }
 
 
     static async getWhere(criteria: object)
     {
-        return await Permission.findAll({ where: { criteria } });
+        return await PermissionModel.findAll({ where: { criteria } });
     }
 
 
     static async create(values: IPermission)
     {
         const { title, slug, description } = values;
-        return await Permission.create({ title, slug, description });
+        return await PermissionModel.create({ title, slug, description });
     }
 
 
     static async update(id: number, values: IPermission)
     {
-        return await Permission.update( values, { where: { id: id } });
+        return await PermissionModel.update( values, { where: { id: id } });
     }
 
 

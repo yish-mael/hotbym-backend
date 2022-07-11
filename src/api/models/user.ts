@@ -1,7 +1,7 @@
 import { DataTypes, Model} from 'sequelize';
 import { sequelize } from '../../config/connection';
-import Country from './country';
-import Role from './role';
+import Country from './Country';
+import Role from './Role';
 
   class User extends Model {
     declare id: number;
@@ -100,4 +100,4 @@ import Role from './role';
   });
 
 
- export default User;
+export default User;

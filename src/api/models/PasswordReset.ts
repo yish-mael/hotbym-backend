@@ -1,43 +1,33 @@
 import { DataTypes, Model} from 'sequelize';
 import { sequelize } from '../../config/connection';
 
-  class Country extends Model {
+  class PasswordReset extends Model {
     declare id: number;
-    declare name: string;
-    declare phoneCode: string;
-    declare abbreviation: string;
-    declare symbol: number;
+    declare email: string;
+    declare token: string;
   }
 
-  Country.init({
+  PasswordReset.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
     },
-    name: {
+    email: {
         type: DataTypes.STRING,
         unique: true,
         allowNull: false,
     },
-    phoneCode: {
+    token: {
         type: DataTypes.STRING,
         allowNull: false,
-    },
-    abbreviation: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    symbol: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
+    }
 
   }, {
-      tableName: "countries",
+      tableName: "password_resets",
       sequelize
   });
 
 
-export default Country;
+export default PasswordReset;

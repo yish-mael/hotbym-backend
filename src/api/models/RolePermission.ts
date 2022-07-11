@@ -1,43 +1,42 @@
 import { DataTypes, Model} from 'sequelize';
 import { sequelize } from '../../config/connection';
-import Permission from './permission';
-import Role from './role';
+import Permission from './Permission';
+import Role from './Role';
 
-  class RolePermission extends Model {
+class RolePermission extends Model {
     declare id: number;
-    declare title: string;
-    declare slug: string;
-    declare description: string;
-  }
+    declare roleId: number;
+    declare permissionId: number;
+}
 
-  RolePermission.init({
+RolePermission.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
-        allowNull: false
     },
     roleId: {
         type: DataTypes.INTEGER,
         references: {
             model: Role, 
             key: 'id'
-        },
+          },
         allowNull: false,
     },
     permissionId: {
         type: DataTypes.INTEGER,
         references: {
-            model: Permission, 
+            model: Permission,
             key: 'id'
-        },
+          },
         allowNull: false,
     },
+}, {
+    tableName: "role_permissions",
+    sequelize
+});
 
-  }, {
-      tableName: "role_permissions",
-      sequelize
-  });
+Role.belongsToMany(Permission, { through: RolePermission, foreignKey: "roleId" });
+Permission.belongsToMany(Role, { through: RolePermission, foreignKey: "permissionId" });
 
-
- export default RolePermission;
+export default RolePermission;

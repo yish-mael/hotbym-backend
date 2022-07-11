@@ -22,8 +22,8 @@ class CountriesController {
         try{
             const id =  parseInt(req.params.id);
             console.log(req.params.id);
-            const oneCoutry = await CountryService.getById(id);
-            return res.status(200).json(oneCoutry);
+            const oneCountry = await CountryService.getById(id);
+            return res.status(200).json(oneCountry);
         }catch(err){
             return res.status(500).json({
                 error: err

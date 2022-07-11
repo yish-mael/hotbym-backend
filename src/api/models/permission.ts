@@ -26,7 +26,7 @@ import { sequelize } from '../../config/connection';
     },
     description: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
 
   }, {
@@ -35,4 +35,4 @@ import { sequelize } from '../../config/connection';
   });
 
 
- export default Permission;
+export default Permission;

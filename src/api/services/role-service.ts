@@ -1,4 +1,4 @@
-import Role from "../models/role";
+import { RoleModel, PermissionModel } from "../models/";
 
 interface IRole {
     title: string,
@@ -12,32 +12,35 @@ class RoleService{
 
     static async getAll()
     {
-        return await Role.findAll();
+        return await RoleModel.findAll();
     }
 
 
     static async getById(id: number)
     {
-        return await Role.findByPk(id);
+        console.log(await RoleModel.findByPk(id));
+        return await RoleModel.findByPk(id, {
+            include: PermissionModel
+        });
     }
 
 
     static async getWhere(criteria: object)
     {
-        return await Role.findAll({ where: { criteria } });
+        return await RoleModel.findAll({ where: { criteria } });
     }
 
 
     static async create(values: IRole)
     {
         const { title, slug, description } = values;
-        return await Role.create({ title, slug, description });
+        return await RoleModel.create({ title, slug, description });
     }
 
 
     static async update(id: number, values: IRole)
     {
-        return await Role.update( values, { where: { id: id } });
+        return await RoleModel.update( values, { where: { id: id } });
     }
 
 

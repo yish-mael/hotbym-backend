@@ -1,4 +1,4 @@
-import Country from "../models/country";
+import { CountryModel } from '../models/';
 
 interface ICountry {
     name: string,
@@ -13,32 +13,32 @@ class CountryService{
 
     static async getAll()
     {
-        return await Country.findAll();
+        return await CountryModel.findAll();
     }
 
 
     static async getById(id: number)
     {
-        return await Country.findByPk(id);
+        return await CountryModel.findByPk(id);
     }
 
 
     static async getWhere(criteria: object)
     {
-        return await Country.findAll({ where: { criteria } });
+        return await CountryModel.findAll({ where: { criteria } });
     }
 
 
     static async create(values: ICountry)
     {
         const { name, phoneCode, abbreviation, symbol } = values;
-        return await Country.create({ name, phoneCode, abbreviation, symbol });
+        return await CountryModel.create({ name, phoneCode, abbreviation, symbol });
     }
 
 
     static async update(id: number, values: ICountry)
     {
-        return await Country.update( values, { where: { id: id } });
+        return await CountryModel.update( values, { where: { id: id } });
     }
 
 

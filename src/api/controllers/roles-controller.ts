@@ -21,7 +21,6 @@ class RolesController {
     {
         try{
             const id =  parseInt(req.params.id);
-            console.log(req.params.id);
             const oneRole = await RoleService.getById(id);
             return res.status(200).json(oneRole);
         }catch(err){
@@ -43,6 +42,17 @@ class RolesController {
             return res.status(500).json({
                 error: err
             });
+        }
+    }
+
+    static async addPermissionsToRole(req: Request, res: Response)
+    {
+        try{
+            const roleId: number = req.body.roleId;
+            const permissionIds: [number] = req.body.permissions;
+
+        }catch(err){
+
         }
     }
 
