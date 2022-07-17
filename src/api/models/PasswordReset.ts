@@ -5,6 +5,7 @@ import { sequelize } from '../../config/connection';
     declare id: number;
     declare email: string;
     declare token: string;
+    declare token_created_at: string;
   }
 
   PasswordReset.init({
@@ -22,7 +23,12 @@ import { sequelize } from '../../config/connection';
     token: {
         type: DataTypes.STRING,
         allowNull: false,
-    }
+    },
+    token_created_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+  }
 
   }, {
       tableName: "password_resets",

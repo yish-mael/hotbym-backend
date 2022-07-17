@@ -1,18 +1,19 @@
+import bcrypt from "bcrypt";
 import { UserModel } from "../models/";
 
 interface IUser {
     firstName: string,
-    middleName: string,
+    middleName?: string,
     lastName: string,
     email: string,
-    telephone: string,
-    gender: string,
-    address: string,
+    telephone?: string,
+    gender?: string,
+    address?: string,
     password: string,
-    status: string,
-    avatar: string,
-    countryId: number,
-    roleId: number,
+    status?: string,
+    avatar?: string,
+    countryId?: number,
+    roleId?: number,
 }
 
 
@@ -32,9 +33,9 @@ class UserService{
     }
 
 
-    static async getWhere(criteria: object)
+    static async getWhere(criteria: any)
     {
-        return await UserModel.findAll({ where: { criteria } });
+        return await UserModel.findAll({ where: criteria  });
     }
 
 
@@ -52,9 +53,32 @@ class UserService{
                 avatar,
                 countryId,
                 roleId } = values;
-        return await UserModel.create({ firstName, middleName, lastName, email, telephone, gender, address, password, status, avatar, countryId, roleId });
-    }
 
+                
+        const user = await UserService.getWhere({email: email});
+        if(user.length > 0){
+            throw "Email already exists.";
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword  = await bcrypt.hash(password, salt);
+
+        // console.log("here");
+        return await UserModel.create({
+            firstName,
+            middleName,
+            lastName,
+            email,
+            telephone,
+            gender,
+            address,
+            password: hashedPassword,
+            status,
+            avatar,
+            countryId,
+            roleId
+        });
+    }
 
     static async update(id: number, values: IUser)
     {

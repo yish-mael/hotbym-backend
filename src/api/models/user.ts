@@ -32,7 +32,9 @@ import Role from './Role';
         allowNull: false
     },
     middleName: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        defaultValue: null,
+        allowNull: true
     },
     lastName: {
         type: DataTypes.STRING,
@@ -44,14 +46,18 @@ import Role from './Role';
     },
     telephone: {
         type: DataTypes.STRING,
-        allowNull: false
+        defaultValue: null,
+        allowNull: true
     },
     gender: {
         type: DataTypes.ENUM("male", "female", "other"),
-        allowNull: false
+        defaultValue: null,
+        allowNull: true
     },
     address: {
         type: DataTypes.STRING,
+        defaultValue: null,
+        allowNull: true
     },
     password: {
         type: DataTypes.STRING,
@@ -59,15 +65,18 @@ import Role from './Role';
     },
     status: {
         type: DataTypes.ENUM("pending", "active", "inactive"),
-        allowNull: false
+        defaultValue: "pending",
+        allowNull: true
     },
     avatar: {
         type: DataTypes.STRING,
-        allowNull: false
+        defaultValue: null,
+        allowNull: true
     },
     rememberToken: {
         type: DataTypes.STRING,
-        allowNull: false
+        defaultValue: null,
+        allowNull: true
     },
     countryId: {
         type: DataTypes.INTEGER,
@@ -83,6 +92,7 @@ import Role from './Role';
           model: Role,
           key: 'id',
         },
+        defaultValue: 1,
         allowNull: false
     },
     createdAt: {

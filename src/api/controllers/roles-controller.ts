@@ -55,7 +55,9 @@ class RolesController {
                 message: "Permissions added successfully.",
             });
         }catch(err){
-            throw err;
+            return res.status(500).json({
+                error: err
+            });
         }
     }
 
@@ -70,7 +72,9 @@ class RolesController {
                 message: "Permissions removed successfully.",
             });
         }catch(err){
-            throw err;
+            return res.status(500).json({
+                error: err
+            });
         }
     }
 
