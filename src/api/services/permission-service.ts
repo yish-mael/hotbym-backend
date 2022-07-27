@@ -31,7 +31,9 @@ class PermissionService{
     static async create(values: IPermission)
     {
         const { title, slug, description } = values;
-        return await PermissionModel.create({ title, slug, description });
+        const [permission, created] = await PermissionModel.findOrCreate({ where: { title, slug, description }});
+        if(created == false) throw "Permission already exists."
+        return permission;
     }
 
 

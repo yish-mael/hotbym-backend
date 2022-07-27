@@ -24,18 +24,18 @@ class RoleService{
     }
 
 
-    static async addPermissions(id: number, permissions: [number])
+    static async addPermissions(id: number, permissions: number[])
     {
-        return await permissions.map((item) => {
-            return RolePermissionModel.findOrCreate({ where: { roleId: id, permissionId: item } });
+        return permissions.map(async (item) => {
+            return await RolePermissionModel.findOrCreate({ where: { roleId: id, permissionId: item } });
         });
     }
 
 
-    static async removePermissions(id: number, permissions: [number])
+    static async removePermissions(id: number, permissions: number[])
     {
-        return await permissions.map((item) => {
-            return RolePermissionModel.destroy({ where: { roleId: id, permissionId: item } });
+        return permissions.map(async (item) => {
+            return await RolePermissionModel.destroy({ where: { roleId: id, permissionId: item } });
         });
     }
 
@@ -49,7 +49,9 @@ class RoleService{
     static async create(values: IRole)
     {
         const { title, slug, description } = values;
-        return await RoleModel.create({ title, slug, description });
+        const [role, created] = await RoleModel.findOrCreate({ where: { title, slug, description }});
+        if(created == false) throw "Role already exists.";
+        return role;
     }
 
 

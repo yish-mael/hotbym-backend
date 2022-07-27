@@ -1,15 +1,14 @@
 import 'dotenv/config';
 import express, { Request, Response, NextFunction } from 'express';
-import { connect } from '../config/connection';
+//import { connect } from '../config/connection';
 import router from './routes';
-connect();
+//connect();
 
 const app = express();
 
 app.set('port', process.env.SERVER_PORT);
 app.use(express.json());
 app.use("/api", router);
-
 
 app.use((req:Request, res:Response, next:NextFunction) => {
     const error = {

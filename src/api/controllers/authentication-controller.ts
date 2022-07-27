@@ -11,8 +11,9 @@ class AuthenticationController {
         try{
             const authUser =  await AuthenticationService.signIn(req.body);
             return res.status(200).json({
-                message: "Sign-in successfull.",
-                token: authUser
+                message: "Sign-in successful.",
+                accessToken: authUser[0],
+                refreshToken: authUser[1]
             });
         }catch(err){
             return res.status(500).json({
@@ -25,14 +26,49 @@ class AuthenticationController {
     static async signUp(req: Request, res: Response)
     {   
         try{
-            const createdUser = await UserService.create(req.body);
-            const generatedToken = await AuthenticationService.generateToken({ id: createdUser.id, email: createdUser.email });
+            const createdUser: any = await UserService.create(req.body);
+            console.log("here");
+            const accessToken = await AuthenticationService.generateToken(createdUser.dataValues);
+            const refreshToken = await AuthenticationService.generateRefreshToken(createdUser.dataValues);
             return res.status(200).json({
                 message: "User registered successfully.",
                 data: createdUser,
-                token: generatedToken
+                accessToken: accessToken,
+                refreshToken: refreshToken
             });
 
+        }catch(err){
+            return res.status(500).json({
+                error: err
+            });
+        }
+    }
+
+
+    static async logout(req: Request, res: Response)
+    {
+        try{
+            await AuthenticationService.removeRefreshToken(req.body.token);
+            return res.status(200).json({
+                message: "Logout successful."
+            });
+        }catch(err){
+            return res.status(500).json({
+                error: err
+            });
+        }
+    }
+    
+    
+    static async refreshToken(req: Request, res: Response)
+    {
+        try{
+            // await AuthenticationService.removeRefreshToken(req.body.token);
+            const access = await AuthenticationService.generateAccessToken(req.body.token);
+            return res.status(200).json({
+                message: "Access token generated.",
+                accessToken: access
+            });
         }catch(err){
             return res.status(500).json({
                 error: err

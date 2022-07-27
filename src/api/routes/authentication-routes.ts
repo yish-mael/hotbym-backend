@@ -5,7 +5,9 @@ const router = Router();
 
 router.post("/sign-up", AuthenticationController.signUp);
 router.post("/sign-in", AuthenticationController.signIn);
+router.delete("/sign-out", AuthenticationController.logout);
 router.post("/forgot", AuthenticationController.forgotPassword);
+router.post("/token", AuthenticationController.refreshToken);
 router.post("/reset/:token", AuthenticationController.resetPassword);
 
 export const authentication_routes = router;

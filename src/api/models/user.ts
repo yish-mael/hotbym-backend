@@ -92,7 +92,6 @@ import Role from './Role';
           model: Role,
           key: 'id',
         },
-        defaultValue: 1,
         allowNull: false
     },
     createdAt: {
@@ -108,6 +107,11 @@ import Role from './Role';
       tableName: "users",
       sequelize
   });
+
+User.belongsTo(Role, { foreignKey: "roleId"} );
+User.belongsTo(Country, { foreignKey: "countryId"} );
+// Role.hasMany(User, { sourceKey: "id", foreignKey: "roleId" });
+// Country.hasMany(User, { sourceKey: "id", foreignKey: "countryId" });
 
 
 export default User;

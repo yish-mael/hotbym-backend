@@ -1,7 +1,6 @@
 import { DataTypes, Model} from 'sequelize';
 import { sequelize } from '../../config/connection';
-import Permission from './Permission';
-import RolePermission from './RolePermission';
+import User from './User';
 
 
   class Role extends Model {
@@ -36,6 +35,7 @@ import RolePermission from './RolePermission';
       tableName: "roles",
       sequelize
   });
-  
+
+ 
 
 export default Role;

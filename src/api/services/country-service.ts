@@ -32,7 +32,9 @@ class CountryService{
     static async create(values: ICountry)
     {
         const { name, phoneCode, abbreviation, symbol } = values;
-        return await CountryModel.create({ name, phoneCode, abbreviation, symbol });
+        const [country, created] = await CountryModel.findOrCreate({ where: { name, phoneCode, abbreviation, symbol }});
+        if(created == false) throw "Country already exists.";
+        return country;
     }
 
 

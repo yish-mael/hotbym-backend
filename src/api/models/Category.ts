@@ -1,45 +1,48 @@
 import { DataTypes, Model} from 'sequelize';
 import { sequelize } from '../../config/connection';
-import User from './User';
 
-  class Country extends Model {
+  class Category extends Model {
     declare id: number;
+    declare parentId: number;
     declare name: string;
-    declare phoneCode: string;
-    declare abbreviation: string;
-    declare symbol: number;
+    declare slug: string;
+    declare description: string;
   }
 
-  Country.init({
+  Category.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
     },
+    parentId: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Category, 
+            key: 'id'
+          },
+        defaultValue: 0,
+        allowNull: false,
+    },
     name: {
         type: DataTypes.STRING,
         unique: true,
         allowNull: false,
     },
-    phoneCode: {
+    slug: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    abbreviation: {
+    description: {
         type: DataTypes.STRING,
-        allowNull: false,
-    },
-    symbol: {
-        type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
 
   }, {
-      tableName: "countries",
+      tableName: "categories",
       sequelize
   });
 
-  //Country.hasMany(User, {foreignKey: 'countryId'});
 
-export default Country;
+export default Category;

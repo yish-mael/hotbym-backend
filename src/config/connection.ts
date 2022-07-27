@@ -20,7 +20,11 @@ export async function connect()
     try {
         await sequelize.authenticate();
         console.log(`Database connection has been established.`);
+        return true;
     } catch(e) {
         console.error(`Database connection error: ${e}.`);
+        return false;
     }
 }
+
+//connect();

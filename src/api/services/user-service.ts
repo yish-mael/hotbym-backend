@@ -1,5 +1,7 @@
 import bcrypt from "bcrypt";
-import { UserModel } from "../models/";
+import { UserModel, RoleModel } from "../models/";
+import { accountCreatedEmail } from "../templates/email-messages";
+import MailService from "./mail-service";
 
 interface IUser {
     firstName: string,
@@ -23,7 +25,9 @@ class UserService{
 
     static async getAll()
     {
-        return await UserModel.findAll();
+        return await UserModel.findAll({
+            include: RoleModel
+        });
     }
 
 
@@ -62,7 +66,12 @@ class UserService{
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword  = await bcrypt.hash(password, salt);
-
+        const message  =  accountCreatedEmail(firstName);
+        await MailService.mailer({ 
+            subject: "Account Created",
+            recipient: email,
+            message
+        });
         // console.log("here");
         return await UserModel.create({
             firstName,

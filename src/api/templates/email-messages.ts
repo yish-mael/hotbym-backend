@@ -90,4 +90,18 @@ const forgotPasswordEmail = (link: string) => {
             `; 
         }
 
-export { forgotPasswordEmail }
+const accountCreatedEmail = (link: string) => { 
+    return `${header}
+            <p><b>Hello ${link}!</b>, 
+            <br /> <br />
+            Welcome to Hotbym. We’re thrilled to see you here!
+            <br />
+            We’re confident that Hotbym will help you find the best accomodation.
+            <br />
+            Thank you.
+            </p>
+            ${footer}
+            `; 
+        }
+
+export { forgotPasswordEmail, accountCreatedEmail }

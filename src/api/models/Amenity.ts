@@ -1,16 +1,15 @@
 import { DataTypes, Model} from 'sequelize';
 import { sequelize } from '../../config/connection';
-import User from './User';
 
-  class Country extends Model {
+
+  class Amenity extends Model {
     declare id: number;
     declare name: string;
-    declare phoneCode: string;
-    declare abbreviation: string;
-    declare symbol: number;
+    declare icon: string;
+    declare description: string;
   }
 
-  Country.init({
+  Amenity.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -22,24 +21,19 @@ import User from './User';
         unique: true,
         allowNull: false,
     },
-    phoneCode: {
+    icon: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    abbreviation: {
+    description: {
         type: DataTypes.STRING,
-        allowNull: false,
-    },
-    symbol: {
-        type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
 
   }, {
-      tableName: "countries",
+      tableName: "amenities",
       sequelize
   });
 
-  //Country.hasMany(User, {foreignKey: 'countryId'});
 
-export default Country;
+export default Amenity;
