@@ -7,6 +7,18 @@ import { authentication_routes } from "./authentication-routes";
 import { amenity_routes } from "./amenity-routes";
 import { category_routes } from "./category-routes";
 import { comments_routes } from "./comment-routes";
+import { state_routes } from "./state-routes";
+import { offline_payment_routes } from "./offline-payment-routes";
+import { online_payment_routes } from "./online-payment-routes";
+import { upload_routes } from "./upload-routes";
+import { property_routes } from "./property-routes";
+import { room_routes } from "./room-routes";
+import { rating_routes } from "./rating-routes";
+import { booking_routes } from "./booking-routes";
+import { favorite_routes } from "./favorite-routes";
+import { transaction_routes } from "./transaction-routes";
+import { booking_guest_routes } from "./booking-guest-routes";
+import { notification_routes } from "./notification-routes";
 
 const router = Router();
 
@@ -18,7 +30,17 @@ router.use("/auth", authentication_routes);
 router.use("/amenities", amenity_routes);
 router.use("/categories", category_routes);
 router.use("/comments", comments_routes);
-
-// router.get("/countries", CountriesController.getAllCountries);
+router.use("/states", state_routes);
+router.use("/offline/payments", offline_payment_routes);
+router.use("/online/payments", online_payment_routes);
+router.use("/uploads", upload_routes);
+router.use("/properties", property_routes);
+router.use("/rooms", room_routes);
+router.use("ratings", rating_routes);
+router.use("/bookings", booking_routes);
+router.use("/favorites", favorite_routes);
+router.use("/transactions", transaction_routes);
+router.use("/booking/guest", booking_guest_routes);
+router.use("/notifications", notification_routes);
 
 export default router;

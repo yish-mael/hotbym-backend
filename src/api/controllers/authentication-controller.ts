@@ -96,9 +96,9 @@ class AuthenticationController {
     static async resetPassword(req: Request, res: Response)
     {
         try{
-            const resetPassword = await AuthenticationService.resetPassword({ token: req.params.token, password: req.body.password });
+            await AuthenticationService.resetPassword({ token: req.params.token, password: req.body.password });
             return res.status(200).json({
-                message: "Password reset successfull."
+                message: "Password reset successful."
             });
         }catch(err){
             return res.status(500).json({

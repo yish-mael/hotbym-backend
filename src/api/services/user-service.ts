@@ -14,7 +14,7 @@ interface IUser {
     password: string,
     status?: string,
     avatar?: string,
-    countryId?: number,
+    stateId?: number,
     roleId?: number,
 }
 
@@ -55,7 +55,7 @@ class UserService{
                 password,
                 status,
                 avatar,
-                countryId,
+                stateId,
                 roleId } = values;
 
                 
@@ -84,7 +84,7 @@ class UserService{
             password: hashedPassword,
             status,
             avatar,
-            countryId,
+            stateId,
             roleId
         });
     }

@@ -1,6 +1,5 @@
 import { DataTypes, Model} from 'sequelize';
 import { sequelize } from '../../config/connection';
-import User from './User';
 
   class Country extends Model {
     declare id: number;
@@ -39,7 +38,5 @@ import User from './User';
       tableName: "countries",
       sequelize
   });
-
-  //Country.hasMany(User, {foreignKey: 'countryId'});
 
 export default Country;

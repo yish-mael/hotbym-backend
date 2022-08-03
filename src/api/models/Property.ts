@@ -1,13 +1,13 @@
 import { DataTypes, Model} from 'sequelize';
 import { sequelize } from '../../config/connection';
 import Category from './Category';
-import Country from './Country';
+import State from './State';
 import User from './User';
 
   class Property extends Model {
     declare id: number;
     declare categoryId: number;
-    declare countryId: number;
+    declare stateId: number;
     declare userId: number;
     declare name: string;
     declare status: string;
@@ -30,10 +30,10 @@ import User from './User';
           },
         allowNull: false,
     },
-    countryId: {
+    stateId: {
         type: DataTypes.INTEGER,
         references: {
-            model: Country, 
+            model: State, 
             key: 'id'
           },
         allowNull: false,
@@ -71,7 +71,7 @@ import User from './User';
   });
 
  Property.belongsTo(Category, { foreignKey: "categoryId" });
- Property.belongsTo(Country, { foreignKey: "countryId" });
+ Property.belongsTo(State, { foreignKey: "stateId" });
  Property.belongsTo(User, { foreignKey: "userId" });
 //  Category.hasMany(Property, { sourceKey: "id", foreignKey: "categoryId"});
 //  Category.hasMany(Country, { sourceKey: "id", foreignKey: "countryId"});

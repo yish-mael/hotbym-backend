@@ -1,7 +1,7 @@
 import { DataTypes, Model} from 'sequelize';
 import { sequelize } from '../../config/connection';
-import Country from './Country';
 import Role from './Role';
+import State from './State';
 
   class User extends Model {
     declare id: number;
@@ -16,7 +16,7 @@ import Role from './Role';
     declare status: string;
     declare avatar: string;
     declare rememberToken: string;
-    declare countryId: number;
+    declare stateId: number;
     declare roleId: number;
   }
 
@@ -78,10 +78,10 @@ import Role from './Role';
         defaultValue: null,
         allowNull: true
     },
-    countryId: {
+    stateId: {
         type: DataTypes.INTEGER,
         references: {
-          model: Country,
+          model: State,
           key: 'id',
         },
         allowNull: false
@@ -109,9 +109,9 @@ import Role from './Role';
   });
 
 User.belongsTo(Role, { foreignKey: "roleId"} );
-User.belongsTo(Country, { foreignKey: "countryId"} );
+User.belongsTo(State, { foreignKey: "stateId"} );
 // Role.hasMany(User, { sourceKey: "id", foreignKey: "roleId" });
-// Country.hasMany(User, { sourceKey: "id", foreignKey: "countryId" });
+// Country.hasMany(User, { sourceKey: "id", foreignKey: "stateId" });
 
 
 export default User;

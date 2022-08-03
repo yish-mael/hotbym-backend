@@ -8,7 +8,6 @@ import User from './User';
 
   class Room extends Model {
     declare id: number;
-    declare amenityId: number;
     declare propertyId: number;
     declare roomType: string;
     declare beds: string;

@@ -44,8 +44,8 @@ class FavoriteService{
 
     static async delete(id: number)
     {
-        const category = await this.getById(id); 
-        return await category?.destroy();
+        const favorite = await this.getById(id); 
+        return await favorite?.destroy();
     }
 
 }

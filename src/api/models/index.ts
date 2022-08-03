@@ -13,29 +13,21 @@ import Property from "./Property";
 import Rating from "./Rating";
 import Room from "./Room";
 import RefreshToken from "./RefreshToken";
-
-
-// const models = [
-//     Country, 
-//     Role,
-//     Permission,
-//     User,
-//     PasswordReset,
-//     Category,
-//     Amenity,
-//     Property,
-//     Favorite,
-//     Rating,
-//     Room,
-//     RolePermission,
-//     Comment,
-// ];
+import Booking from "./Booking";
+import Notification from "./Notification";
+import Upload from "./Upload";
+import OfflinePayment from "./OfflinePayment";
+import OnlinePayment from "./OnlinePayment";
+import Transaction from "./Transaction";
+import State from "./State";
+import RoomAmenity from "./RoomAmenity";
+import BookingGuest from "./BookingGuest";
 
 async function syncronize(){
 
     try{
         const con  = await connect();
-        if(con) await sequelize.sync({ alter: true}); 
+        if(con) await sequelize.sync(); 
     }catch(err){
         throw err;
     }
@@ -45,6 +37,7 @@ async function syncronize(){
 
 
 export const CountryModel = Country;
+export const StateModel = State;
 export const RoleModel = Role;
 export const PermissionModel = Permission;
 export const UserModel = User;
@@ -57,4 +50,12 @@ export const FavoriteModel = Favorite;
 export const PropertyModel = Property;
 export const RatingModel = Rating;
 export const RoomModel = Room;
+export const RoomAmenityModel = RoomAmenity;
 export const RefreshTokenModel = RefreshToken;
+export const BookingModel = Booking;
+export const OfflinePaymentModel = OfflinePayment;
+export const OnlinePaymentModel = OnlinePayment;
+export const UploadModel = Upload;
+export const TransactionModel = Transaction;
+export const NotificationModel = Notification;
+export const BookingGuestModel = BookingGuest;

@@ -18,10 +18,6 @@ import { sequelize } from '../../config/connection';
     },
     parentId: {
         type: DataTypes.INTEGER,
-        references: {
-            model: Category, 
-            key: 'id'
-          },
         defaultValue: 0,
         allowNull: false,
     },
