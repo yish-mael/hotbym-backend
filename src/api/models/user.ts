@@ -84,7 +84,7 @@ import State from './State';
           model: State,
           key: 'id',
         },
-        allowNull: false
+        allowNull: true
     },
     roleId: {
         type: DataTypes.INTEGER,

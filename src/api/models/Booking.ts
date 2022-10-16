@@ -1,5 +1,6 @@
 import { DataTypes, Model} from 'sequelize';
 import { sequelize } from '../../config/connection';
+import Organisation from './Organisation';
 import Room from './Room';
 import User from './User';
 
@@ -8,6 +9,8 @@ import User from './User';
     declare id: number;
     declare roomId: number;
     declare userId: number;
+    declare orderId: string;
+    declare organisationId: number;
     declare type: string;
     declare status: string;
     declare price: string;
@@ -42,6 +45,18 @@ import User from './User';
           },
         allowNull: false,
     },
+    organisationId: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Organisation, 
+            key: 'id'
+          },
+        allowNull: true,
+    },
+    orderId: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
     type: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -70,7 +85,7 @@ import User from './User';
         type: DataTypes.DATE,
         allowNull: false,
     },
-    depatureDate: {
+    departureDate: {
         type: DataTypes.DATE,
         allowNull: false,
     },
@@ -86,5 +101,8 @@ import User from './User';
 
   Booking.belongsTo(User, { foreignKey: "userId" } );
   Booking.belongsTo(Room, { foreignKey: "roomId" } );
+  Booking.belongsTo(Organisation, { foreignKey: "organisationId" } );
+  Room.hasMany(Booking, { sourceKey: "id", foreignKey: "roomId" });
+
 
 export default Booking;

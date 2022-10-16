@@ -1,4 +1,6 @@
 import { Router } from "express";
+import { hasPermission } from "../middlewares/authorization-middleware";
+import { authenticate } from "../middlewares/authentication-middleware";
 import { country_routes } from "./country-routes";
 import { role_routes } from "./role-routes";
 import { permission_routes } from "./permission-routes";
@@ -10,6 +12,8 @@ import { comments_routes } from "./comment-routes";
 import { state_routes } from "./state-routes";
 import { offline_payment_routes } from "./offline-payment-routes";
 import { online_payment_routes } from "./online-payment-routes";
+import { organisations_routes } from "./organisation-routes";
+import { payment_routes } from "./payment-routes";
 import { upload_routes } from "./upload-routes";
 import { property_routes } from "./property-routes";
 import { room_routes } from "./room-routes";
@@ -19,6 +23,7 @@ import { favorite_routes } from "./favorite-routes";
 import { transaction_routes } from "./transaction-routes";
 import { booking_guest_routes } from "./booking-guest-routes";
 import { notification_routes } from "./notification-routes";
+import { daily_booking_routes } from "./daily-booking-routes";
 
 const router = Router();
 
@@ -33,6 +38,8 @@ router.use("/comments", comments_routes);
 router.use("/states", state_routes);
 router.use("/offline/payments", offline_payment_routes);
 router.use("/online/payments", online_payment_routes);
+router.use("/organisations", organisations_routes);
+router.use("/payments", payment_routes);
 router.use("/uploads", upload_routes);
 router.use("/properties", property_routes);
 router.use("/rooms", room_routes);
@@ -41,6 +48,7 @@ router.use("/bookings", booking_routes);
 router.use("/favorites", favorite_routes);
 router.use("/transactions", transaction_routes);
 router.use("/booking/guest", booking_guest_routes);
+router.use("/bookings/daily", daily_booking_routes);
 router.use("/notifications", notification_routes);
 
 export default router;

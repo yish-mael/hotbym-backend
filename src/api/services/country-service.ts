@@ -1,4 +1,4 @@
-import { CountryModel } from '../models/';
+import { CountryModel, StateModel } from '../models/';
 
 interface ICountry {
     name: string,
@@ -13,7 +13,9 @@ class CountryService{
 
     static async getAll()
     {
-        return await CountryModel.findAll();
+        return await CountryModel.findAll({
+            include: StateModel,
+        });
     }
 
 

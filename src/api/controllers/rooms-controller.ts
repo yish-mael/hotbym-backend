@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import RoomService from "../services/room-service";
+import UploadService from "../services/upload-service";
 
 class RoomsController {
 
@@ -24,6 +25,30 @@ class RoomsController {
             console.log(req.params.id);
             const oneRoom = await RoomService.getById(id);
             return res.status(200).json(oneRoom);
+        }catch(err){
+            return res.status(500).json({
+                error: err
+            });
+        }
+    }
+    
+    static async getRoomSearch(req: Request, res: Response)
+    {
+        try{
+            const roomSearch = await RoomService.getWhereSearch(req.body);
+            return res.status(200).json(roomSearch);
+        }catch(err){
+            return res.status(500).json({
+                error: err
+            });
+        }
+    }
+
+    static async getRoomImages(req: Request, res: Response)
+    {
+        try{
+            const allRoomImages =  await UploadService.getWhere({type: "room", typeId: req.body.roomId});
+            return res.status(200).json(allRoomImages);
         }catch(err){
             return res.status(500).json({
                 error: err

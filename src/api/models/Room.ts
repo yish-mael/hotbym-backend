@@ -1,6 +1,7 @@
 import { DataTypes, Model} from 'sequelize';
 import { sequelize } from '../../config/connection';
 import Amenity from './Amenity';
+import BookingDaily from './BookingDaily';
 import Category from './Category';
 import Country from './Country';
 import Property from './Property';
@@ -13,8 +14,9 @@ import User from './User';
     declare beds: string;
     declare adults: string;
     declare children: string;
-    declare limit: string;
+    declare limit: number;
     declare price: string;
+    declare pricePerHour: string;
     declare discount: string;
     declare status: string;
   }
@@ -25,14 +27,6 @@ import User from './User';
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
-    },
-    amenityId: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: Amenity, 
-            key: 'id'
-          },
-        allowNull: false,
     },
     propertyId: {
         type: DataTypes.INTEGER,
@@ -59,12 +53,16 @@ import User from './User';
         allowNull: false,
     },
     limit: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
     },
     price: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
+    },
+    pricePerHour: {
+        type: DataTypes.STRING,
+        allowNull: true,
     },
     discount: {
         type: DataTypes.STRING,
@@ -81,9 +79,10 @@ import User from './User';
       sequelize
   });
 
- Room.belongsTo(Amenity, { foreignKey: "amenityId" });
+
  Room.belongsTo(Property, { foreignKey: "propertyId" });
+//  Room.belongsTo(BookingDaily, { foreignKey: "propertyId" });
  //Amenity.hasMany(Room, { sourceKey: "id", foreignKey: "amenityId" });
- //Property.hasMany(Room, { sourceKey: "id", foreignKey: "propertyId" });
+ Property.hasMany(Room, { sourceKey: "id", foreignKey: "propertyId" });
 
 export default Room;

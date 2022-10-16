@@ -12,7 +12,9 @@ class RoleService{
 
     static async getAll()
     {
-        return await RoleModel.findAll();
+        return await RoleModel.findAll({
+            include: [PermissionModel],
+        });
     }
 
 
@@ -34,15 +36,16 @@ class RoleService{
 
     static async removePermissions(id: number, permissions: number[])
     {
+        // console.log(id, " Here", permissions)
         return permissions.map(async (item) => {
             return await RolePermissionModel.destroy({ where: { roleId: id, permissionId: item } });
         });
     }
 
 
-    static async getWhere(criteria: object)
+    static async getWhere(criteria: any)
     {
-        return await RoleModel.findAll({ where: { criteria } });
+        return await RoleModel.findAll({ where: criteria });
     }
 
 

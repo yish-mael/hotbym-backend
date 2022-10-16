@@ -10,10 +10,13 @@ class AuthenticationController {
     {
         try{
             const authUser =  await AuthenticationService.signIn(req.body);
+            res.cookie('jwt', authUser[1], { httpOnly: true, secure: true, maxAge: 24 * 60 * 60 * 1000 });
             return res.status(200).json({
                 message: "Sign-in successful.",
                 accessToken: authUser[0],
-                refreshToken: authUser[1]
+                refreshToken: authUser[1],
+                userId: authUser[3],
+                roleId: authUser[2],
             });
         }catch(err){
             return res.status(500).json({
@@ -27,9 +30,10 @@ class AuthenticationController {
     {   
         try{
             const createdUser: any = await UserService.create(req.body);
-            console.log("here");
+            //console.log("here");
             const accessToken = await AuthenticationService.generateToken(createdUser.dataValues);
             const refreshToken = await AuthenticationService.generateRefreshToken(createdUser.dataValues);
+            res.cookie('jwt', refreshToken, { httpOnly: true, secure: true, maxAge: 24 * 60 * 60 * 1000 })
             return res.status(200).json({
                 message: "User registered successfully.",
                 data: createdUser,
@@ -47,8 +51,10 @@ class AuthenticationController {
 
     static async logout(req: Request, res: Response)
     {
+        //console.log(req.cookies.jwt);
         try{
-            await AuthenticationService.removeRefreshToken(req.body.token);
+            await AuthenticationService.removeRefreshToken(req.cookies.jwt);
+            res.clearCookie('jwt', { httpOnly: true, secure: true });
             return res.status(200).json({
                 message: "Logout successful."
             });
@@ -63,11 +69,16 @@ class AuthenticationController {
     static async refreshToken(req: Request, res: Response)
     {
         try{
-            // await AuthenticationService.removeRefreshToken(req.body.token);
-            const access = await AuthenticationService.generateAccessToken(req.body.token);
+            // await AuthenticationService.removeRefreshToken(req.cookies.jwt);
+            //console.log("Hello there");
+            //console.log(req.body);
+            const access = await AuthenticationService.generateAccessToken(req.cookies.jwt);
+            console.log(req.cookies.jwt);
+            console.log("access : ", access);
             return res.status(200).json({
                 message: "Access token generated.",
-                accessToken: access
+                accessToken: access.token,
+                userId: access.userId
             });
         }catch(err){
             return res.status(500).json({

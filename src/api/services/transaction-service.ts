@@ -1,10 +1,10 @@
-import { TransactionModel } from "../models";
+import { PaymentModel, TransactionModel, UserModel } from "../models";
 
 interface ITransaction {
     userId: number,
-    bookingId: number,
-    offlinePaymentId: number,
-    onlinePaymentId: number,
+    orderId: string,
+    paymentId: number,
+    reference: string
     status: string,
     amount: string,
 }
@@ -15,7 +15,9 @@ class TransactionService{
 
     static async getAll()
     {
-        return await TransactionModel.findAll();
+        return await TransactionModel.findAll({
+            include: [UserModel, PaymentModel],
+        });
     }
 
 
@@ -25,17 +27,19 @@ class TransactionService{
     }
 
 
-    static async getWhere(criteria: object)
+    static async getWhere(criteria: any)
     {
-        return await TransactionModel.findAll({ where: { criteria } });
+        return await TransactionModel.findAll({ where: criteria });
     }
 
 
     static async create(values: ITransaction)
     {
-        const { userId, bookingId, offlinePaymentId, onlinePaymentId, status, amount } = values;
+        const { userId, orderId, paymentId, reference, status, amount } = values;
+
+        // console.log(values);
         
-        const [transaction, created] = await TransactionModel.findOrCreate({ where: { userId, bookingId, offlinePaymentId, onlinePaymentId, status, amount }});
+        const [transaction, created] = await TransactionModel.findOrCreate({ where: { userId, orderId, paymentId, reference, status, amount }});
         if(created == false) throw "Transaction already exists.";
         return transaction;
     }

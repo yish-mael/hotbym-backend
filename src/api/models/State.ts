@@ -35,5 +35,6 @@ import Country from './Country';
   });
 
   State.belongsTo(Country, {foreignKey: 'countryId'});
+  Country.hasMany(State, { sourceKey: "id", foreignKey: "countryId" });
 
 export default State;

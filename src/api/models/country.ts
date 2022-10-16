@@ -1,5 +1,6 @@
 import { DataTypes, Model} from 'sequelize';
 import { sequelize } from '../../config/connection';
+import State from './State';
 
   class Country extends Model {
     declare id: number;
@@ -38,5 +39,7 @@ import { sequelize } from '../../config/connection';
       tableName: "countries",
       sequelize
   });
+
+
 
 export default Country;

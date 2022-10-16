@@ -1,4 +1,5 @@
-import { PropertyModel } from "../models/";
+import { BookingModel, CategoryModel, CountryModel, PropertyModel, RoomModel, StateModel, UserModel } from "../models/";
+import UploadService from "./upload-service";
 
 interface IProperty {
     categoryId: number,
@@ -16,13 +17,17 @@ class PropertyService{
 
     static async getAll()
     {
-        return await PropertyModel.findAll();
+        return await PropertyModel.findAll({
+            include: [UserModel, CategoryModel, {model: RoomModel, include: [BookingModel]}, {model: StateModel, include: [{model: CountryModel, include: [StateModel]} ]}]
+        });
     }
 
 
     static async getById(id: number)
     {
-        return await PropertyModel.findByPk(id);
+        return await PropertyModel.findByPk(id, {
+            include: [UserModel, CategoryModel, {model: RoomModel, include: [BookingModel]}, {model: StateModel, include: [{model: CountryModel, include: [StateModel]} ]}]
+        });
     }
 
 

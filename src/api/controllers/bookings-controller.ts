@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
+import BookingDailyService from "../services/booking-daily-service";
 import BookingService from "../services/booking-service";
+import { Op } from "sequelize";
 
 class BookingsController {
 
@@ -24,6 +26,57 @@ class BookingsController {
             console.log(req.params.id);
             const oneBooking = await BookingService.getById(id);
             return res.status(200).json(oneBooking);
+        }catch(err){
+            return res.status(500).json({
+                error: err
+            });
+        }
+    }
+    static async getBooking(req: Request, res: Response)
+    {
+        try{
+            const id =  req.body.orderId;
+            console.log(id);
+            const oneBooking = await BookingService.getWhere({orderId: id});
+            return res.status(200).json(oneBooking);
+        }catch(err){
+            return res.status(500).json({
+                error: err
+            });
+        }
+    }
+
+    static async getUnavailableBookings(req: Request, res: Response)
+    {
+        // console.log(req.body.limit)
+        try{
+            const unavailableBookings =  await BookingDailyService.getWhere({ date: { [Op.gte]: new Date() }, roomId: parseInt(req.body.roomId), quantity: req.body.limit,  timeIn: null, timeOut: null, });
+            return res.status(200).json(unavailableBookings);
+        }catch(err){
+            return res.status(500).json({
+                error: err
+            });
+        }
+    }
+
+    static async getUnavailableBookingsInRange(req: Request, res: Response)
+    {
+        // console.log(req.body.limit)
+        try{
+            const unavailableBookings =  await BookingDailyService.getWhere({ date: { [Op.between]: [new Date(req.body.start), new Date(req.body.end)] }, roomId: parseInt(req.body.roomId), quantity: req.body.limit,  timeIn: null, timeOut: null, });
+            return res.status(200).json(unavailableBookings);
+        }catch(err){
+            return res.status(500).json({
+                error: err
+            });
+        }
+    }
+
+    static async getAvailableBookingQuantity(req: Request, res: Response)
+    {
+        try{
+            const availableBookings =  await BookingDailyService.getWhere({ date: { [Op.between]: [new Date(req.body.start), new Date(req.body.end)] }, roomId: parseInt(req.body.roomId), quantity: { [Op.lt]: parseInt(req.body.limit)},  timeIn: null, timeOut: null, });
+            return res.status(200).json(availableBookings);
         }catch(err){
             return res.status(500).json({
                 error: err

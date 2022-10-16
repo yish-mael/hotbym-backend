@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import UploadService from "../services/upload-service";
 import UserService from "../services/user-service";
 
 class UserController {
@@ -24,6 +25,18 @@ class UserController {
             console.log(req.params.id);
             const oneUser = await UserService.getById(id);
             return res.status(200).json(oneUser);
+        }catch(err){
+            return res.status(500).json({
+                error: err
+            });
+        }
+    }
+
+    static async getUserImages(req: Request, res: Response)
+    {
+        try{
+            const allUserImages =  await UploadService.getWhere({type: "user", typeId: req.body.userId});
+            return res.status(200).json(allUserImages);
         }catch(err){
             return res.status(500).json({
                 error: err

@@ -2,12 +2,12 @@ import { DataTypes, Model} from 'sequelize';
 import { sequelize } from '../../config/connection';
 import User from './User';
 
-
+const uppercaseFirst = (str: any) => `${str[0].toUpperCase()}${str.substr(1)}`;
   class Upload extends Model {
     declare id: number;
     declare userId: number;
     declare typeId: number;
-    declare type: string;
+    declare type: 'property' | 'room' | 'user';
     declare format: string;
     declare url: string;
   }
@@ -46,7 +46,9 @@ import User from './User';
 
   }, {
       tableName: "uploads",
-      sequelize
+      sequelize,
+      
+
   });
 
   Upload.belongsTo(User, { foreignKey: "userId" } );

@@ -1,4 +1,6 @@
-import { RoomAmenityModel, RoomModel } from "../models";
+import { Op, Sequelize } from "sequelize";
+import { BookingDailyModel, PropertyModel, RoomAmenityModel, RoomModel } from "../models";
+import BookingDailyService from "./booking-daily-service";
 
 interface IRoom {
     propertyId: number,
@@ -6,8 +8,9 @@ interface IRoom {
     beds: string,
     adults: string,
     children: string,
-    limit: string,
+    limit: number,
     price: string,
+    pricePerHour: string,
     discount: string,
     status: string,
 }
@@ -18,7 +21,9 @@ class RoomService{
 
     static async getAll()
     {
-        return await RoomModel.findAll();
+        return await RoomModel.findAll({
+            include: [PropertyModel],
+        });
     }
 
 
@@ -43,17 +48,64 @@ class RoomService{
     }
 
 
-    static async getWhere(criteria: object)
+    static async getWhere(criteria: any)
     {
-        return await RoomModel.findAll({ where: { criteria } });
+        return await RoomModel.findAll({ where: criteria });
+    }
+
+
+    static async getUnavailableRange(room: any, start: any, end: any)
+    {
+        // console.log(room.limit)
+        try{
+            const unavailableBookings =  await BookingDailyService.getWhere({ date: { [Op.between]: [new Date(start), new Date(end)] }, roomId: parseInt(room.id), quantity: room.limit,  timeIn: null, timeOut: null, });
+            return unavailableBookings;
+        }catch(err){
+            return err;
+        }
+    }
+
+    
+    static async getWhereSearch(include: any)
+    {
+
+        const allActiveRooms = await RoomModel.findAll({
+
+            where: {
+                        status: "active",
+                    },
+            include: [
+                        { 
+                            model: PropertyModel,
+                            where: { 
+                                categoryId: include?.categoryId,
+                                stateId: include?.stateId,
+                                status: "active",
+                            } 
+                        }
+                    ]
+            }
+        );
+
+        const allAvailableRooms = allActiveRooms.map(async (room) => {
+
+            const unavailableList: any = await this.getUnavailableRange(room, include.start, include.end);
+
+            if (!(unavailableList.length > 0)){
+                return room;
+            }
+
+        })
+
+        return  (await Promise.all(allAvailableRooms)).filter(n => n);
     }
 
 
     static async create(values: IRoom)
     {
-        const { propertyId, roomType, beds, adults, children, limit, price, discount, status } = values;
+        const { propertyId, roomType, beds, adults, children, limit, price, pricePerHour, discount, status } = values;
         
-        const [room, created] = await RoomModel.findOrCreate({ where: { propertyId, roomType, beds, adults, children, limit, price, discount, status }});
+        const [room, created] = await RoomModel.findOrCreate({ where: { propertyId, roomType, beds, adults, children, limit, price, pricePerHour, discount, status }});
         if(created == false) throw "Room already exists.";
         return room;
     }

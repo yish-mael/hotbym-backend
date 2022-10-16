@@ -1,8 +1,11 @@
 import "dotenv/config";
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response, NextFunction, request } from 'express';
 import router from "./routes";
+import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
+import cookieParser from "cookie-parser";
+
 //import swaggerDocument from "../config/swagger.json";
 
 
@@ -16,29 +19,18 @@ import swaggerJsDoc from "swagger-jsdoc";
 
 const app = express();
 
+app.use(cors({credentials: true, origin: true}));
+
 const swaggerOptions = {
     swaggerDefinition: {
-      openapi: '3.0.0',
-      info: {
-        title: "Hotbym API",
-        version: '1.0.0',
-      },
+        openapi: '3.0.0',
+        info: {
+            title: "Hotbym API",
+            version: '1.0.0',
+        },
     },
     apis: ["./src/api/routes/*.ts"],
 };
-
-// const options = {
-//     definition: {
-//       openapi: '3.0.0',
-//       info: {
-//         title: 'Hello World',
-//         version: '1.0.0',
-//       },
-//     },
-//     apis: ['./src/routes*.js'], // files containing annotations as above
-//   };
-
-
   
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
@@ -51,6 +43,7 @@ app.use(
 
 app.set('port', process.env.SERVER_PORT);
 app.use(express.json());
+app.use(cookieParser());
 
 
 app.use("/api", router);

@@ -1,17 +1,16 @@
 import { DataTypes, Model} from 'sequelize';
 import { sequelize } from '../../config/connection';
-import Booking from './Booking';
-import OfflinePayment from './OfflinePayment';
-import OnlinePayment from './OnlinePayment';
+// import Booking from './Booking';
+import Payment from './Payment';
 import User from './User';
 
 
   class Transaction extends Model {
     declare id: number;
     declare userId: number;
-    declare bookingId: number;
-    declare offlinePaymentId: number;
-    declare onlinePaymentId: number;
+    declare orderId: string;
+    declare paymentId: number;
+    declare reference: string;
     declare status: string;
     declare amount: string;
   }
@@ -31,28 +30,20 @@ import User from './User';
           },
         allowNull: false,
     },
-    bookingId: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: Booking, 
-            key: 'id'
-          },
+    orderId: {
+        type: DataTypes.STRING,
         allowNull: false,
     },
-    offlinePaymentId: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: OfflinePayment, 
-            key: 'id'
-          },
-        allowNull: true,
+    paymentId: {
+      type: DataTypes.INTEGER,
+      references: {
+          model: Payment, 
+          key: 'id'
+      },
+      allowNull: true,
     },
-    onlinePaymentId: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: OnlinePayment, 
-            key: 'id'
-          },
+    reference: {
+        type: DataTypes.STRING,
         allowNull: true,
     },
     status: {
@@ -63,15 +54,13 @@ import User from './User';
         type: DataTypes.STRING,
         allowNull: false,
     }
-
   }, {
       tableName: "transactions",
       sequelize
   });
 
   Transaction.belongsTo(User, { foreignKey: "userId" } );
-  Transaction.belongsTo(Booking, { foreignKey: "bookingId" } );
-  Transaction.belongsTo(OfflinePayment, { foreignKey: "offlinePaymentId" } );
-  Transaction.belongsTo(OnlinePayment, { foreignKey: "onlinePaymentId" } );
+  // Transaction.belongsTo(Booking, { foreignKey: "bookingId" } );
+  Transaction.belongsTo(Payment, { foreignKey: "PaymentId" } );
 
 export default Transaction;

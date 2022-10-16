@@ -1,4 +1,4 @@
-import { UploadModel } from "../models";
+import { UploadModel, UserModel } from "../models";
 
 interface IUpload {
     userId: number,
@@ -14,7 +14,9 @@ class UploadService{
 
     static async getAll()
     {
-        return await UploadModel.findAll();
+        return await UploadModel.findAll({
+            include: [UserModel],
+        });
     }
 
 
@@ -24,9 +26,9 @@ class UploadService{
     }
 
 
-    static async getWhere(criteria: object)
+    static async getWhere(criteria: any)
     {
-        return await UploadModel.findAll({ where: { criteria } });
+        return await UploadModel.findAll({ where: criteria });
     }
 
 

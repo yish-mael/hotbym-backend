@@ -1,8 +1,10 @@
-import { BookingModel } from "../models";
+import { BookingModel, PropertyModel, RoomModel, UserModel } from "../models";
 
 interface IBooking {
     roomId: number,
     userId: number,
+    organisationId: number,
+    orderId: string,
     type: string,
     status: string,
     price: string,
@@ -20,7 +22,9 @@ class BookingService{
 
     static async getAll()
     {
-        return await BookingModel.findAll();
+        return await BookingModel.findAll({
+            include: [UserModel, {model: RoomModel, include: [PropertyModel]}],
+        });
     }
 
 
@@ -30,17 +34,16 @@ class BookingService{
     }
 
 
-    static async getWhere(criteria: object)
+    static async getWhere(criteria: any)
     {
-        return await BookingModel.findAll({ where: { criteria } });
+        return await BookingModel.findAll({ where: criteria, include: [RoomModel] });
     }
 
 
     static async create(values: IBooking)
     {
-        const { roomId, userId, type, status, price, commission, markup, totalAmount, arrivalDate, departureDate, quantity} = values;
-        
-        const [booking, created] = await BookingModel.findOrCreate({ where: { roomId, userId, type, status, price, commission, markup, totalAmount, arrivalDate, departureDate, quantity}});
+        const { roomId, userId, orderId, organisationId, type, status, price, commission, markup, totalAmount, arrivalDate, departureDate, quantity} = values; 
+        const [booking, created] = await BookingModel.findOrCreate({ where: { roomId, userId, orderId, organisationId, type, status, price, commission, markup, totalAmount, arrivalDate, departureDate, quantity}});
         if(created == false) throw "Booking already exists.";
         return booking;
     }

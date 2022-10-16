@@ -23,13 +23,15 @@ class AuthenticationService{
 
         if(checkRefreshToken.length < 1) throw "Invalid refresh token.";
         // if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403)
-        return jwt.verify(refreshToken, secret, (err: any, user: any) => {
+        console.log(checkRefreshToken[0].userId);
+        return { token: jwt.verify(refreshToken, secret, (err: any, user: any) => {
             if(err) throw err;
             delete user.iat;
             delete user.exp;
             return this.generateToken(user);
         
-        });
+        }),
+        userId: checkRefreshToken[0].userId};
     }
 
 
@@ -43,7 +45,7 @@ class AuthenticationService{
     static async generateRefreshToken(tokenObject: any)
     {
         const secret = (process.env.JWT_REFRESH_SECRET as string);
-        const refreshToken = jwt.sign(tokenObject, secret, { expiresIn: '1hr' });
+        const refreshToken = jwt.sign(tokenObject, secret, { expiresIn: 24 * 60 * 60 * 1000 });
         await RefreshTokenModel.create({ token: refreshToken, userId: tokenObject.id });
         return refreshToken;
     }
@@ -59,19 +61,19 @@ class AuthenticationService{
     static async signIn(credentials: {email: string, password: string, rememberToken?: string})
     {
         const user: any = await UserService.getWhere({email: credentials.email});
-        if(user.length < 1) throw "Email doesn't exists.";
+        if(user.length < 1) throw {email: "Email doesn't exists."};
 
         const match = await bcrypt.compare(credentials.password, user[0].password);
-        if (!match) throw "Invalid password.";
-
-        return [await this.generateToken(user[0].dataValues), await this.generateRefreshToken(user[0].dataValues)];
+        if (!match) throw {password: "Invalid password."};
+        console.log(user);
+        return [ this.generateToken(user[0].dataValues), await this.generateRefreshToken(user[0].dataValues), user[0].roleId, user[0].id ];
     }
 
     
     static async forgotPassword(email: string)
     {
         const user = await UserService.getWhere({email: email});
-        if(user.length < 1) throw "Email doesn't exists.";
+        if(user.length < 1) throw {email: "Email doesn't exists."};
 
         // insert into the password reset table.
         const token = crypto.randomBytes(10).toString('hex');
@@ -83,7 +85,7 @@ class AuthenticationService{
             token_created_at: currentDate
         });
 
-        const link = token;
+        const link = "http://localhost:3000/change-password/"+token;
         const message  =  forgotPasswordEmail(link);
 
         // send email with password reset link.
@@ -96,18 +98,21 @@ class AuthenticationService{
     {
         // check if token exists.
         const tokenCheck = await PasswordResetModel.findAll({ where: { token: values.token }});
-        if(tokenCheck.length < 1) throw "Token doesn't exists.";
+        if(tokenCheck.length < 1) throw {token: "Token doesn't exists."};
 
         // check token expiry.
         const tokenDate = new Date(tokenCheck[0].token_created_at);
         const currentDate = new Date();
         const difference = currentDate.getTime() - tokenDate.getTime(); 
         const resultInMinutes = Math.round(difference / 60000);
-        if(resultInMinutes > 20) throw "Password reset token expired.";
+        if(resultInMinutes > 20) throw {token: "Password reset token expired."};
         await tokenCheck[0].destroy();
 
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword  = await bcrypt.hash(values.password, salt);
+
         // update user password.
-        const updatedUser = await UserModel.update({ password: values.password }, { where: { email: tokenCheck[0].email } });
+        const updatedUser = await UserModel.update({ password: hashedPassword }, { where: { email: tokenCheck[0].email } });
         return updatedUser;
     }
 

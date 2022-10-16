@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import StateService from "../services/state-service";
+import UploadService from "../services/upload-service";
 
 class StatesController {
 
@@ -17,6 +18,18 @@ class StatesController {
         }
     }
 
+    static async getCountryStates(req: Request, res: Response)
+    {
+        try{
+            const allStates =  await StateService.getCountryStates(parseInt(req.params.id));
+            return res.status(200).json(allStates);
+        }catch(err){
+            return res.status(500).json({
+                error: err
+            });
+        }
+    }
+
     static async getOneState(req: Request, res: Response)
     {
         try{
@@ -24,6 +37,19 @@ class StatesController {
             console.log(req.params.id);
             const oneState = await StateService.getById(id);
             return res.status(200).json(oneState);
+        }catch(err){
+            return res.status(500).json({
+                error: err
+            });
+        }
+    }
+
+    static async getStateImages(req: Request, res: Response)
+    {
+        try{
+            //console.log(req.body.propertyId);
+            const allStateImages =  await UploadService.getWhere({type: "state", typeId: req.body.stateId});
+            return res.status(200).json(allStateImages);
         }catch(err){
             return res.status(500).json({
                 error: err

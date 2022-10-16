@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { UserModel, RoleModel } from "../models/";
+import { UserModel, RoleModel, StateModel, CountryModel } from "../models/";
 import { accountCreatedEmail } from "../templates/email-messages";
 import MailService from "./mail-service";
 
@@ -26,14 +26,15 @@ class UserService{
     static async getAll()
     {
         return await UserModel.findAll({
-            include: RoleModel
+            include: [RoleModel, {model: StateModel, include: [CountryModel]}],
+            attributes: {exclude: ['password']}
         });
     }
 
 
     static async getById(id: number)
     {
-        return await UserModel.findByPk(id);
+        return await UserModel.findByPk( id, {include: [RoleModel, {model: StateModel, include: [CountryModel]}],});
     }
 
 
@@ -67,11 +68,11 @@ class UserService{
         const salt = await bcrypt.genSalt(10);
         const hashedPassword  = await bcrypt.hash(password, salt);
         const message  =  accountCreatedEmail(firstName);
-        await MailService.mailer({ 
-            subject: "Account Created",
-            recipient: email,
-            message
-        });
+        // await MailService.mailer({ 
+        //     subject: "Account Created",
+        //     recipient: email,
+        //     message
+        // });
         // console.log("here");
         return await UserModel.create({
             firstName,

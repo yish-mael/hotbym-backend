@@ -6,6 +6,7 @@ import User from './User';
   class RefreshToken extends Model {
     declare id: number;
     declare token: string;
+    declare userId: number;
   }
 
   RefreshToken.init({

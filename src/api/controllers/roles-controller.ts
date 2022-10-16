@@ -64,6 +64,7 @@ class RolesController {
 
     static async removePermissionsFromRole(req: Request, res: Response)
     {
+        console.log(req.body.id)
         try{
             const id =  parseInt(req.body.id);
             const permissions =  req.body.permissions;

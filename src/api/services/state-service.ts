@@ -1,4 +1,4 @@
-import { StateModel } from "../models";
+import { CountryModel, StateModel } from "../models";
 
 interface IState {
     name: string,
@@ -11,9 +11,10 @@ class StateService{
 
     static async getAll()
     {
-        return await StateModel.findAll();
+        return await StateModel.findAll({
+            include: CountryModel,
+        });
     }
-
 
     static async getById(id: number)
     {
@@ -21,9 +22,16 @@ class StateService{
     }
 
 
-    static async getWhere(criteria: object)
+    static async getWhere(criteria: any)
     {
-        return await StateModel.findAll({ where: { criteria } });
+        console.log(criteria);
+        return await StateModel.findAll({ where: criteria });
+    }
+
+    static async getCountryStates(countryId: number)
+    {
+        //console.log(criteria);
+        return await StateModel.findAll({ where: { countryId } });
     }
 
 

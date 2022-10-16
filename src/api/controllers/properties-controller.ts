@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import PropertyService from "../services/property-service";
+import UploadService from "../services/upload-service";
 
 class PropertiesController {
 
@@ -10,6 +11,19 @@ class PropertiesController {
         try{
             const allProperties =  await PropertyService.getAll();
             return res.status(200).json(allProperties);
+        }catch(err){
+            return res.status(500).json({
+                error: err
+            });
+        }
+    }
+
+    static async getPropertyImages(req: Request, res: Response)
+    {
+        try{
+            //console.log(req.body.propertyId);
+            const allPropertyImages =  await UploadService.getWhere({type: "property", typeId: req.body.propertyId});
+            return res.status(200).json(allPropertyImages);
         }catch(err){
             return res.status(500).json({
                 error: err

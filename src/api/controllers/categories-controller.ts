@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import CategoryService from "../services/category-service";
+import UploadService from "../services/upload-service";
 
 class CategoriesController {
 
@@ -24,6 +25,19 @@ class CategoriesController {
             console.log(req.params.id);
             const oneCategory = await CategoryService.getById(id);
             return res.status(200).json(oneCategory);
+        }catch(err){
+            return res.status(500).json({
+                error: err
+            });
+        }
+    }
+
+    static async getCategoryImages(req: Request, res: Response)
+    {
+        try{
+            //console.log(req.body.propertyId);
+            const allCategoryImages =  await UploadService.getWhere({type: "category", typeId: req.body.categoryId});
+            return res.status(200).json(allCategoryImages);
         }catch(err){
             return res.status(500).json({
                 error: err
