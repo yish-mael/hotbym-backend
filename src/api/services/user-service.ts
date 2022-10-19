@@ -68,11 +68,11 @@ class UserService{
         const salt = await bcrypt.genSalt(10);
         const hashedPassword  = await bcrypt.hash(password, salt);
         const message  =  accountCreatedEmail(firstName);
-        // await MailService.mailer({ 
-        //     subject: "Account Created",
-        //     recipient: email,
-        //     message
-        // });
+        await MailService.mailer({ 
+            subject: "Account Created",
+            recipient: email,
+            message
+        });
         // console.log("here");
         return await UserModel.create({
             firstName,
