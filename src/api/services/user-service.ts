@@ -92,6 +92,10 @@ class UserService{
 
     static async update(id: number, values: IUser)
     {
+        if (values?.password){
+            const salt = await bcrypt.genSalt(10);
+            values.password  = await bcrypt.hash(values.password, salt);
+        }
         return await UserModel.update( values, { where: { id: id } });
     }
 

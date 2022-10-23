@@ -104,4 +104,46 @@ const accountCreatedEmail = (link: string) => {
             `; 
         }
 
-export { forgotPasswordEmail, accountCreatedEmail }
+const contactEmail = (values: any) => { 
+    return `${header}
+            <p>
+                <b>Hello Admin!</b>, 
+                <br /> <br />
+                This message was sent from the contact form at hotbym.com
+                <br /> <br />
+                First Name: ${values?.firstName}
+                <br />
+                Last Name: ${values?.lastName}
+                <br />
+                Email: ${values?.email}
+                <br /> 
+                Subject: ${values?.subject}
+                <br /> 
+                Message: ${values?.message}
+                <br /><br />
+            </p>
+            ${footer}
+            `; 
+        }
+        
+const requestEmail = (values: any) => { 
+    return `${header}
+            <p>
+            <b>Hello Admin!</b>, 
+            <br /> <br />
+            This message was sent from the Bookings Request form at hotbym.com
+            <br /> <br />
+            Company Name: ${values?.companyName}
+            <br />
+            Email: ${values?.email}
+            <br /> 
+            Telephone: ${values?.telephone}
+            <br /> 
+            Details: ${values?.description}
+            <br /><br />
+            </p>
+            ${footer}
+            `; 
+        }
+
+export { forgotPasswordEmail, accountCreatedEmail, contactEmail, requestEmail }

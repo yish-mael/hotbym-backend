@@ -24,6 +24,8 @@ import { transaction_routes } from "./transaction-routes";
 import { booking_guest_routes } from "./booking-guest-routes";
 import { notification_routes } from "./notification-routes";
 import { daily_booking_routes } from "./daily-booking-routes";
+import { contact_routes } from "./contact-routes";
+import { request_routes } from "./request-routes";
 
 const router = Router();
 
@@ -50,5 +52,7 @@ router.use("/transactions", transaction_routes);
 router.use("/booking/guest", booking_guest_routes);
 router.use("/bookings/daily", daily_booking_routes);
 router.use("/notifications", notification_routes);
+router.use("/contacts", contact_routes);
+router.use("/requests", request_routes);
 
 export default router;
