@@ -10,7 +10,7 @@ class AuthenticationController {
     {
         try{
             const authUser =  await AuthenticationService.signIn(req.body);
-            // res.cookie('jwt', authUser[1], { httpOnly: true, secure: true, maxAge: 24 * 60 * 60 * 1000 });
+            res.cookie('jwt', authUser[1], { httpOnly: true, secure: true, maxAge: 24 * 60 * 60 * 1000 });
             return res.status(200).json({
                 message: "Sign-in successful.",
                 accessToken: authUser[0],
