@@ -78,6 +78,7 @@ class AuthenticationController {
             return res.status(200).json({
                 message: "Access token generated.",
                 accessToken: access.token,
+                roleId: access.roleId,
                 userId: access.userId
             });
         }catch(err){

@@ -31,6 +31,7 @@ class AuthenticationService{
             return this.generateToken(user);
         
         }),
+        roleId: jwt.verify(refreshToken, secret, (err: any, user: any) => { return user.roleId; }),
         userId: checkRefreshToken[0].userId};
     }
 

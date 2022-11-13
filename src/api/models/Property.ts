@@ -48,7 +48,6 @@ import User from './User';
     },
     name: {
         type: DataTypes.STRING,
-        unique: true,
         allowNull: false,
     },
     status: {
@@ -58,6 +57,7 @@ import User from './User';
     },
     address: {
         type: DataTypes.STRING,
+        unique: true, 
         allowNull: false,
     },
     description: {
