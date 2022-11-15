@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const models_1 = require("../models/");
 const email_messages_1 = require("../templates/email-messages");
+const mail_service_1 = __importDefault(require("./mail-service"));
 class UserService {
     constructor() { }
     static getAll() {
@@ -45,11 +46,11 @@ class UserService {
             const salt = yield bcrypt_1.default.genSalt(10);
             const hashedPassword = yield bcrypt_1.default.hash(password, salt);
             const message = (0, email_messages_1.accountCreatedEmail)(firstName);
-            // await MailService.mailer({ 
-            //     subject: "Account Created",
-            //     recipient: email,
-            //     message
-            // });
+            yield mail_service_1.default.mailer({
+                subject: "Account Created",
+                recipient: email,
+                message
+            });
             // console.log("here");
             return yield models_1.UserModel.create({
                 firstName,
@@ -69,6 +70,10 @@ class UserService {
     }
     static update(id, values) {
         return __awaiter(this, void 0, void 0, function* () {
+            if (values === null || values === void 0 ? void 0 : values.password) {
+                const salt = yield bcrypt_1.default.genSalt(10);
+                values.password = yield bcrypt_1.default.hash(values.password, salt);
+            }
             return yield models_1.UserModel.update(values, { where: { id: id } });
         });
     }

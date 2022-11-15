@@ -43,7 +43,6 @@ Property.init({
     },
     name: {
         type: sequelize_1.DataTypes.STRING,
-        unique: true,
         allowNull: false,
     },
     status: {
@@ -53,6 +52,7 @@ Property.init({
     },
     address: {
         type: sequelize_1.DataTypes.STRING,
+        unique: true,
         allowNull: false,
     },
     description: {

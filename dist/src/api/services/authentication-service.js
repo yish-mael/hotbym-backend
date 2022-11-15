@@ -39,6 +39,7 @@ class AuthenticationService {
                     delete user.exp;
                     return this.generateToken(user);
                 }),
+                roleId: jsonwebtoken_1.default.verify(refreshToken, secret, (err, user) => { return user.roleId; }),
                 userId: checkRefreshToken[0].userId };
         });
     }

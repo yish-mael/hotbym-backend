@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.accountCreatedEmail = exports.forgotPasswordEmail = void 0;
+exports.requestEmail = exports.contactEmail = exports.accountCreatedEmail = exports.forgotPasswordEmail = void 0;
 const header = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                 <html xmlns="http://www.w3.org/1999/xhtml">
                 <head>
@@ -104,3 +104,45 @@ const accountCreatedEmail = (link) => {
             `;
 };
 exports.accountCreatedEmail = accountCreatedEmail;
+const contactEmail = (values) => {
+    return `${header}
+            <p>
+                <b>Hello Admin!</b>, 
+                <br /> <br />
+                This message was sent from the contact form at hotbym.com
+                <br /> <br />
+                First Name: ${values === null || values === void 0 ? void 0 : values.firstName}
+                <br />
+                Last Name: ${values === null || values === void 0 ? void 0 : values.lastName}
+                <br />
+                Email: ${values === null || values === void 0 ? void 0 : values.email}
+                <br /> 
+                Subject: ${values === null || values === void 0 ? void 0 : values.subject}
+                <br /> 
+                Message: ${values === null || values === void 0 ? void 0 : values.message}
+                <br /><br />
+            </p>
+            ${footer}
+            `;
+};
+exports.contactEmail = contactEmail;
+const requestEmail = (values) => {
+    return `${header}
+            <p>
+            <b>Hello Admin!</b>, 
+            <br /> <br />
+            This message was sent from the Bookings Request form at hotbym.com
+            <br /> <br />
+            Company Name: ${values === null || values === void 0 ? void 0 : values.companyName}
+            <br />
+            Email: ${values === null || values === void 0 ? void 0 : values.email}
+            <br /> 
+            Telephone: ${values === null || values === void 0 ? void 0 : values.telephone}
+            <br /> 
+            Details: ${values === null || values === void 0 ? void 0 : values.description}
+            <br /><br />
+            </p>
+            ${footer}
+            `;
+};
+exports.requestEmail = requestEmail;
