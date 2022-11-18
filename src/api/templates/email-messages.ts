@@ -146,4 +146,64 @@ const requestEmail = (values: any) => {
             `; 
         }
 
+const userBookingOfflineEmail = (values: any) => { 
+    return `${header}
+            <p>
+            <b>Hello Admin!</b>, 
+            <br /> <br />
+            This message was sent from the Bookings Request form at hotbym.com
+            <br /> <br />
+            Company Name: ${values?.companyName}
+            <br />
+            Email: ${values?.email}
+            <br /> 
+            Telephone: ${values?.telephone}
+            <br /> 
+            Details: ${values?.description}
+            <br /><br />
+            </p>
+            ${footer}
+            `; 
+        }
+
+const userBookingOnlineEmail = (values: any) => { 
+    return `${header}
+            <p>
+            <b>Hello Admin!</b>, 
+            <br /> <br />
+            This message was sent from the Bookings Request form at hotbym.com
+            <br /> <br />
+            Company Name: ${values?.companyName}
+            <br />
+            Email: ${values?.email}
+            <br /> 
+            Telephone: ${values?.telephone}
+            <br /> 
+            Details: ${values?.description}
+            <br /><br />
+            </p>
+            ${footer}
+            `; 
+    }
+
+const adminBookingEmail = (values: any) => { 
+    return `${header}
+            <p>
+            <b>Hello Admin!</b>, 
+            <br /> <br />
+            This message was sent from the Bookings Request form at hotbym.com
+            <br /> <br />
+            Company Name: ${values?.companyName}
+            <br />
+            Email: ${values?.email}
+            <br /> 
+            Telephone: ${values?.telephone}
+            <br /> 
+            Details: ${values?.description}
+            <br /><br />
+            </p>
+            ${footer}
+            `; 
+    }
+
 export { forgotPasswordEmail, accountCreatedEmail, contactEmail, requestEmail }

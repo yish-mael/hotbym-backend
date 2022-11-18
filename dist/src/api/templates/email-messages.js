@@ -146,3 +146,60 @@ const requestEmail = (values) => {
             `;
 };
 exports.requestEmail = requestEmail;
+const userBookingOfflineEmail = (values) => {
+    return `${header}
+            <p>
+            <b>Hello Admin!</b>, 
+            <br /> <br />
+            This message was sent from the Bookings Request form at hotbym.com
+            <br /> <br />
+            Company Name: ${values === null || values === void 0 ? void 0 : values.companyName}
+            <br />
+            Email: ${values === null || values === void 0 ? void 0 : values.email}
+            <br /> 
+            Telephone: ${values === null || values === void 0 ? void 0 : values.telephone}
+            <br /> 
+            Details: ${values === null || values === void 0 ? void 0 : values.description}
+            <br /><br />
+            </p>
+            ${footer}
+            `;
+};
+const userBookingOnlineEmail = (values) => {
+    return `${header}
+            <p>
+            <b>Hello Admin!</b>, 
+            <br /> <br />
+            This message was sent from the Bookings Request form at hotbym.com
+            <br /> <br />
+            Company Name: ${values === null || values === void 0 ? void 0 : values.companyName}
+            <br />
+            Email: ${values === null || values === void 0 ? void 0 : values.email}
+            <br /> 
+            Telephone: ${values === null || values === void 0 ? void 0 : values.telephone}
+            <br /> 
+            Details: ${values === null || values === void 0 ? void 0 : values.description}
+            <br /><br />
+            </p>
+            ${footer}
+            `;
+};
+const adminBookingEmail = (values) => {
+    return `${header}
+            <p>
+            <b>Hello Admin!</b>, 
+            <br /> <br />
+            This message was sent from the Bookings Request form at hotbym.com
+            <br /> <br />
+            Company Name: ${values === null || values === void 0 ? void 0 : values.companyName}
+            <br />
+            Email: ${values === null || values === void 0 ? void 0 : values.email}
+            <br /> 
+            Telephone: ${values === null || values === void 0 ? void 0 : values.telephone}
+            <br /> 
+            Details: ${values === null || values === void 0 ? void 0 : values.description}
+            <br /><br />
+            </p>
+            ${footer}
+            `;
+};
