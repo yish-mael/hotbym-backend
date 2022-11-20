@@ -16,8 +16,10 @@ class RequestBookingService{
     static async send(values: IRequest)
     {
         const message  =  requestEmail(values);
+
         // send email with password reset link.
-        return await MailService.mailer({ subject: "Hotbym Booking Request", recipient: 'tolu.akinnubi@yahoo.com', message });
+        return await MailService.mailer({ subject: "Hotbym Booking Request", recipient: 'info@hotbym.com', message });
+
     }
 
 }
