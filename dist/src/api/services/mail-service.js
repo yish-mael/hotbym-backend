@@ -19,8 +19,9 @@ class MailService {
     static mailer(mailOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             let transporter = nodemailer_1.default.createTransport({
+                pool: true,
                 host: process.env.MAILER_HOST,
-                port: 2525 || parseInt(process.env.MAILER_HOST),
+                port: parseInt(process.env.MAILER_PORT) || 2525,
                 secure: false,
                 auth: {
                     user: process.env.MAILER_USER,
@@ -31,7 +32,6 @@ class MailService {
                 from: process.env.MAILER_EMAIL,
                 to: mailOptions.recipient,
                 subject: mailOptions.subject,
-                // text: "Hello world?", // plain text body
                 html: mailOptions.message,
             });
         });

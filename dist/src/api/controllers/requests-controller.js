@@ -18,6 +18,7 @@ class RequestsController {
     static sendRequests(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                console.log(req.body);
                 const sent = yield request_booking_service_1.default.send(req.body);
                 return res.status(200).json(sent);
             }

@@ -135,11 +135,21 @@ const requestEmail = (values) => {
             <br /> <br />
             Company Name: ${values === null || values === void 0 ? void 0 : values.companyName}
             <br />
+            Guest Name: ${values === null || values === void 0 ? void 0 : values.guest}
+            <br /> 
             Email: ${values === null || values === void 0 ? void 0 : values.email}
             <br /> 
             Telephone: ${values === null || values === void 0 ? void 0 : values.telephone}
             <br /> 
-            Details: ${values === null || values === void 0 ? void 0 : values.description}
+            Location: ${values === null || values === void 0 ? void 0 : values.location}
+            <br /> 
+            Budget: ${values === null || values === void 0 ? void 0 : values.budget}
+            <br /> 
+            Check In: ${values === null || values === void 0 ? void 0 : values.checkin}
+            <br /> 
+            Check Out: ${values === null || values === void 0 ? void 0 : values.checkout}
+            <br /> 
+            Additions: ${values === null || values === void 0 ? void 0 : values.additions}
             <br /><br />
             </p>
             ${footer}

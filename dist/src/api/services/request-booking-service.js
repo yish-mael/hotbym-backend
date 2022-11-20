@@ -20,7 +20,7 @@ class RequestBookingService {
         return __awaiter(this, void 0, void 0, function* () {
             const message = (0, email_messages_1.requestEmail)(values);
             // send email with password reset link.
-            return yield mail_service_1.default.mailer({ subject: "Hotbym Booking Request", recipient: 'info@hotbym.com', message });
+            return yield mail_service_1.default.mailer({ subject: "Hotbym Booking Request", recipient: 'tolu.akinnubi@yahoo.com', message });
         });
     }
 }

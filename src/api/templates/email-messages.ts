@@ -135,11 +135,21 @@ const requestEmail = (values: any) => {
             <br /> <br />
             Company Name: ${values?.companyName}
             <br />
+            Guest Name: ${values?.guest}
+            <br /> 
             Email: ${values?.email}
             <br /> 
             Telephone: ${values?.telephone}
             <br /> 
-            Details: ${values?.description}
+            Location: ${values?.location}
+            <br /> 
+            Budget: ${values?.budget}
+            <br /> 
+            Check In: ${values?.checkin}
+            <br /> 
+            Check Out: ${values?.checkout}
+            <br /> 
+            Additions: ${values?.additions}
             <br /><br />
             </p>
             ${footer}

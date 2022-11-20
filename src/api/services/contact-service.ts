@@ -19,7 +19,7 @@ class ContactService{
         const message  =  contactEmail(values);
 
         // send email with password reset link.
-        return await MailService.mailer({ subject: "Hotbym Contact Form", recipient: 'info@hotbym.com', message });
+        return await MailService.mailer({ subject: "Hotbym Contact Form", recipient: 'tolu.akinnubi@yahoo.com', message });
 
     }
 

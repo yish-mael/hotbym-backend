@@ -8,6 +8,7 @@ class RequestsController {
     static async sendRequests(req: Request, res: Response)
     {
         try{
+            console.log(req.body);
             const sent = await RequestBookingService.send(req.body);
             return res.status(200).json(sent);
         }catch(err){
