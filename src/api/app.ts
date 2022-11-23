@@ -19,7 +19,7 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 
-app.use(cors({credentials: true}));
+app.use(cors({credentials: true, origin: ["https://hotbym.com", "https://portal.hotbym.com", "https://api.hotbym.com", "http://localhost:3000", "http://localhost:3001",  ]}));
 // app.use(cors({credentials: true, origin: true}));
 
 const swaggerOptions = {
