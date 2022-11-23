@@ -19,7 +19,7 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 // }
 //connect();
 const app = (0, express_1.default)();
-app.use((0, cors_1.default)());
+app.use((0, cors_1.default)({ credentials: true }));
 // app.use(cors({credentials: true, origin: true}));
 const swaggerOptions = {
     swaggerDefinition: {
