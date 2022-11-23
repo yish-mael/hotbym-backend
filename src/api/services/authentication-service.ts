@@ -85,7 +85,7 @@ class AuthenticationService{
             token_created_at: currentDate
         });
 
-        const link = "http://localhost:3000/change-password/"+token;
+        const link = "https://portal.hotbym.com/change-password/"+token;
         const message  =  forgotPasswordEmail(link);
 
         // send email with password reset link.
