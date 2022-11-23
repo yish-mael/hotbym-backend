@@ -31,7 +31,7 @@ const header = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "
                 <table class="content" width="100%" cellpadding="0" cellspacing="0" role="presentation" style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; margin: 0; padding: 0; width: 100%;">
                 <tr>
                 <td class="header" style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; padding: 25px 0; text-align: center;">
-                <a href="http://localhost" style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 19px; font-weight: bold; text-decoration: none; display: inline-block;">
+                <a href="https://hotbym.com/" style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 19px; font-weight: bold; text-decoration: none; display: inline-block;">
                 Hotbym
                 </a>
                 </td>
@@ -129,28 +129,28 @@ const contactEmail = (values: any) => {
 const requestEmail = (values: any) => { 
     return `${header}
             <p>
-            <b>Hello Admin!</b>, 
-            <br /> <br />
-            This message was sent from the Bookings Request form at hotbym.com
-            <br /> <br />
-            Company Name: ${values?.companyName}
-            <br />
-            Guest Name: ${values?.guest}
-            <br /> 
-            Email: ${values?.email}
-            <br /> 
-            Telephone: ${values?.telephone}
-            <br /> 
-            Location: ${values?.location}
-            <br /> 
-            Budget: ${values?.budget}
-            <br /> 
-            Check In: ${values?.checkin}
-            <br /> 
-            Check Out: ${values?.checkout}
-            <br /> 
-            Additions: ${values?.additions}
-            <br /><br />
+                <b>Hello Admin!</b>, 
+                <br /> <br />
+                This message was sent from the Bookings Request form at hotbym.com
+                <br /> <br />
+                Company Name: ${values?.companyName}
+                <br />
+                Guest Name: ${JSON.stringify(values?.guest).replace(/[^\w ]/g, '').replace(/name/g, ' - ')}
+                <br /> 
+                Email: ${values?.email}
+                <br /> 
+                Telephone: ${values?.telephone}
+                <br /> 
+                Location: ${values?.location}
+                <br /> 
+                Budget: ${values?.budget}
+                <br /> 
+                Check In: ${values?.checkin}
+                <br /> 
+                Check Out: ${values?.checkout}
+                <br /> 
+                Additions: ${values?.additions}
+                <br /><br />
             </p>
             ${footer}
             `; 
@@ -159,18 +159,30 @@ const requestEmail = (values: any) => {
 const userBookingOfflineEmail = (values: any) => { 
     return `${header}
             <p>
-            <b>Hello Admin!</b>, 
-            <br /> <br />
-            This message was sent from the Bookings Request form at hotbym.com
-            <br /> <br />
-            Company Name: ${values?.companyName}
-            <br />
-            Email: ${values?.email}
-            <br /> 
-            Telephone: ${values?.telephone}
-            <br /> 
-            Details: ${values?.description}
-            <br /><br />
+                <b>Hello ${values?.firstName}!</b>, 
+                <br /> <br />
+                Your booking has been received at hotbym.com
+                <br /> <br />
+                Order ID: ${values?.orderId}
+                <br />
+                Check In: ${values?.checkIn}
+                <br /> 
+                Check Out: ${values?.checkOut}
+                <br /> 
+                Room: ${values?.room}
+                <br /> 
+                Payment Status: Pending
+                <br /> <br />
+                Bank: ${values?.bank}
+                <br />
+                Account Name: ${values?.name}
+                <br />
+                Account NO.: ${values?.accountNo}
+                <br />
+                Total Amount: ${values?.amount}
+                <br /><br />
+
+                NOTE: Make sure to add the Order ID in your payment remarks.
             </p>
             ${footer}
             `; 
@@ -179,41 +191,94 @@ const userBookingOfflineEmail = (values: any) => {
 const userBookingOnlineEmail = (values: any) => { 
     return `${header}
             <p>
-            <b>Hello Admin!</b>, 
-            <br /> <br />
-            This message was sent from the Bookings Request form at hotbym.com
-            <br /> <br />
-            Company Name: ${values?.companyName}
-            <br />
-            Email: ${values?.email}
-            <br /> 
-            Telephone: ${values?.telephone}
-            <br /> 
-            Details: ${values?.description}
-            <br /><br />
+                <b>Hello ${values?.firstName}!</b>, 
+                <br /> <br />
+                Your booking has been received at hotbym.com
+                <br /> <br />
+                Order ID: ${values?.orderId}
+                <br />
+                Check In: ${values?.checkIn}
+                <br /> 
+                Check Out: ${values?.checkOut}
+                <br /> 
+                Room: ${values?.room}
+                <br /> 
+                Payment Status: Complete
+                <br /> <br />
+                Payment Channel: ${values?.channel}
+                <br />
+                Total Amount: ${values?.amount}
+                <br /><br />
+
+                NOTE: Make sure to add the Order ID in your payment remarks.
             </p>
             ${footer}
             `; 
     }
 
-const adminBookingEmail = (values: any) => { 
+const adminOfflineBookingEmail = (values: any) => { 
     return `${header}
             <p>
-            <b>Hello Admin!</b>, 
-            <br /> <br />
-            This message was sent from the Bookings Request form at hotbym.com
-            <br /> <br />
-            Company Name: ${values?.companyName}
-            <br />
-            Email: ${values?.email}
-            <br /> 
-            Telephone: ${values?.telephone}
-            <br /> 
-            Details: ${values?.description}
-            <br /><br />
+                <b>Hello Admin!</b>, 
+                <br /> <br />
+                A new bookings has been received at hotbym.com
+                <br /> <br />
+                Order ID: ${values?.orderId}
+                <br />
+                Check In: ${values?.checkIn}
+                <br /> 
+                Check Out: ${values?.checkOut}
+                <br /> 
+                Room: ${values?.room}
+                <br /> 
+                Payment Status: Pending
+                <br /> <br />
+                Bank: ${values?.bank}
+                <br />
+                Account Name: ${values?.bankName}
+                <br />
+                Account NO.: ${values?.accountNo}
+                <br />
+                Total Amount: ${values?.amount}
+                <br /><br />
             </p>
             ${footer}
             `; 
     }
 
-export { forgotPasswordEmail, accountCreatedEmail, contactEmail, requestEmail }
+const adminOnlineBookingEmail = (values: any) => { 
+    return `${header}
+            <p>
+                <b>Hello Admin!</b>, 
+                <br /> <br />
+                A new bookings has been received at hotbym.com
+                <br /> <br />
+                Order ID: ${values?.orderId}
+                <br />
+                Check In: ${values?.checkIn}
+                <br /> 
+                Check Out: ${values?.checkOut}
+                <br /> 
+                Room: ${values?.room}
+                <br /> 
+                Payment Status: Complete
+                <br /> <br />
+                Payment Channel: ${values?.channel}
+                <br />
+                Total Amount: ${values?.amount}
+                <br /><br />
+            </p>
+            ${footer}
+            `; 
+    }
+
+export { 
+        forgotPasswordEmail, 
+        accountCreatedEmail, 
+        contactEmail, 
+        requestEmail, 
+        userBookingOfflineEmail, 
+        userBookingOnlineEmail, 
+        adminOfflineBookingEmail, 
+        adminOnlineBookingEmail 
+    }

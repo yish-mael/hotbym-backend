@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.requestEmail = exports.contactEmail = exports.accountCreatedEmail = exports.forgotPasswordEmail = void 0;
+exports.adminOnlineBookingEmail = exports.adminOfflineBookingEmail = exports.userBookingOnlineEmail = exports.userBookingOfflineEmail = exports.requestEmail = exports.contactEmail = exports.accountCreatedEmail = exports.forgotPasswordEmail = void 0;
 const header = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                 <html xmlns="http://www.w3.org/1999/xhtml">
                 <head>
@@ -34,7 +34,7 @@ const header = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "
                 <table class="content" width="100%" cellpadding="0" cellspacing="0" role="presentation" style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; margin: 0; padding: 0; width: 100%;">
                 <tr>
                 <td class="header" style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; padding: 25px 0; text-align: center;">
-                <a href="http://localhost" style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 19px; font-weight: bold; text-decoration: none; display: inline-block;">
+                <a href="https://hotbym.com/" style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 19px; font-weight: bold; text-decoration: none; display: inline-block;">
                 Hotbym
                 </a>
                 </td>
@@ -129,28 +129,28 @@ exports.contactEmail = contactEmail;
 const requestEmail = (values) => {
     return `${header}
             <p>
-            <b>Hello Admin!</b>, 
-            <br /> <br />
-            This message was sent from the Bookings Request form at hotbym.com
-            <br /> <br />
-            Company Name: ${values === null || values === void 0 ? void 0 : values.companyName}
-            <br />
-            Guest Name: ${values === null || values === void 0 ? void 0 : values.guest}
-            <br /> 
-            Email: ${values === null || values === void 0 ? void 0 : values.email}
-            <br /> 
-            Telephone: ${values === null || values === void 0 ? void 0 : values.telephone}
-            <br /> 
-            Location: ${values === null || values === void 0 ? void 0 : values.location}
-            <br /> 
-            Budget: ${values === null || values === void 0 ? void 0 : values.budget}
-            <br /> 
-            Check In: ${values === null || values === void 0 ? void 0 : values.checkin}
-            <br /> 
-            Check Out: ${values === null || values === void 0 ? void 0 : values.checkout}
-            <br /> 
-            Additions: ${values === null || values === void 0 ? void 0 : values.additions}
-            <br /><br />
+                <b>Hello Admin!</b>, 
+                <br /> <br />
+                This message was sent from the Bookings Request form at hotbym.com
+                <br /> <br />
+                Company Name: ${values === null || values === void 0 ? void 0 : values.companyName}
+                <br />
+                Guest Name: ${JSON.stringify(values === null || values === void 0 ? void 0 : values.guest).replace(/[^\w ]/g, '').replace(/name/g, ' - ')}
+                <br /> 
+                Email: ${values === null || values === void 0 ? void 0 : values.email}
+                <br /> 
+                Telephone: ${values === null || values === void 0 ? void 0 : values.telephone}
+                <br /> 
+                Location: ${values === null || values === void 0 ? void 0 : values.location}
+                <br /> 
+                Budget: ${values === null || values === void 0 ? void 0 : values.budget}
+                <br /> 
+                Check In: ${values === null || values === void 0 ? void 0 : values.checkin}
+                <br /> 
+                Check Out: ${values === null || values === void 0 ? void 0 : values.checkout}
+                <br /> 
+                Additions: ${values === null || values === void 0 ? void 0 : values.additions}
+                <br /><br />
             </p>
             ${footer}
             `;
@@ -159,57 +159,116 @@ exports.requestEmail = requestEmail;
 const userBookingOfflineEmail = (values) => {
     return `${header}
             <p>
-            <b>Hello Admin!</b>, 
-            <br /> <br />
-            This message was sent from the Bookings Request form at hotbym.com
-            <br /> <br />
-            Company Name: ${values === null || values === void 0 ? void 0 : values.companyName}
-            <br />
-            Email: ${values === null || values === void 0 ? void 0 : values.email}
-            <br /> 
-            Telephone: ${values === null || values === void 0 ? void 0 : values.telephone}
-            <br /> 
-            Details: ${values === null || values === void 0 ? void 0 : values.description}
-            <br /><br />
+                <b>Hello ${values === null || values === void 0 ? void 0 : values.firstName}!</b>, 
+                <br /> <br />
+                Your booking has been received at hotbym.com
+                <br /> <br />
+                Order ID: ${values === null || values === void 0 ? void 0 : values.orderId}
+                <br />
+                Check In: ${values === null || values === void 0 ? void 0 : values.checkIn}
+                <br /> 
+                Check Out: ${values === null || values === void 0 ? void 0 : values.checkOut}
+                <br /> 
+                Room: ${values === null || values === void 0 ? void 0 : values.room}
+                <br /> 
+                Payment Status: Pending
+                <br /> <br />
+                Bank: ${values === null || values === void 0 ? void 0 : values.bank}
+                <br />
+                Account Name: ${values === null || values === void 0 ? void 0 : values.name}
+                <br />
+                Account NO.: ${values === null || values === void 0 ? void 0 : values.accountNo}
+                <br />
+                Total Amount: ${values === null || values === void 0 ? void 0 : values.amount}
+                <br /><br />
+
+                NOTE: Make sure to add the Order ID in your payment remarks.
             </p>
             ${footer}
             `;
 };
+exports.userBookingOfflineEmail = userBookingOfflineEmail;
 const userBookingOnlineEmail = (values) => {
     return `${header}
             <p>
-            <b>Hello Admin!</b>, 
-            <br /> <br />
-            This message was sent from the Bookings Request form at hotbym.com
-            <br /> <br />
-            Company Name: ${values === null || values === void 0 ? void 0 : values.companyName}
-            <br />
-            Email: ${values === null || values === void 0 ? void 0 : values.email}
-            <br /> 
-            Telephone: ${values === null || values === void 0 ? void 0 : values.telephone}
-            <br /> 
-            Details: ${values === null || values === void 0 ? void 0 : values.description}
-            <br /><br />
+                <b>Hello ${values === null || values === void 0 ? void 0 : values.firstName}!</b>, 
+                <br /> <br />
+                Your booking has been received at hotbym.com
+                <br /> <br />
+                Order ID: ${values === null || values === void 0 ? void 0 : values.orderId}
+                <br />
+                Check In: ${values === null || values === void 0 ? void 0 : values.checkIn}
+                <br /> 
+                Check Out: ${values === null || values === void 0 ? void 0 : values.checkOut}
+                <br /> 
+                Room: ${values === null || values === void 0 ? void 0 : values.room}
+                <br /> 
+                Payment Status: Complete
+                <br /> <br />
+                Payment Channel: ${values === null || values === void 0 ? void 0 : values.channel}
+                <br />
+                Total Amount: ${values === null || values === void 0 ? void 0 : values.amount}
+                <br /><br />
+
+                NOTE: Make sure to add the Order ID in your payment remarks.
             </p>
             ${footer}
             `;
 };
-const adminBookingEmail = (values) => {
+exports.userBookingOnlineEmail = userBookingOnlineEmail;
+const adminOfflineBookingEmail = (values) => {
     return `${header}
             <p>
-            <b>Hello Admin!</b>, 
-            <br /> <br />
-            This message was sent from the Bookings Request form at hotbym.com
-            <br /> <br />
-            Company Name: ${values === null || values === void 0 ? void 0 : values.companyName}
-            <br />
-            Email: ${values === null || values === void 0 ? void 0 : values.email}
-            <br /> 
-            Telephone: ${values === null || values === void 0 ? void 0 : values.telephone}
-            <br /> 
-            Details: ${values === null || values === void 0 ? void 0 : values.description}
-            <br /><br />
+                <b>Hello Admin!</b>, 
+                <br /> <br />
+                A new bookings has been received at hotbym.com
+                <br /> <br />
+                Order ID: ${values === null || values === void 0 ? void 0 : values.orderId}
+                <br />
+                Check In: ${values === null || values === void 0 ? void 0 : values.checkIn}
+                <br /> 
+                Check Out: ${values === null || values === void 0 ? void 0 : values.checkOut}
+                <br /> 
+                Room: ${values === null || values === void 0 ? void 0 : values.room}
+                <br /> 
+                Payment Status: Pending
+                <br /> <br />
+                Bank: ${values === null || values === void 0 ? void 0 : values.bank}
+                <br />
+                Account Name: ${values === null || values === void 0 ? void 0 : values.bankName}
+                <br />
+                Account NO.: ${values === null || values === void 0 ? void 0 : values.accountNo}
+                <br />
+                Total Amount: ${values === null || values === void 0 ? void 0 : values.amount}
+                <br /><br />
             </p>
             ${footer}
             `;
 };
+exports.adminOfflineBookingEmail = adminOfflineBookingEmail;
+const adminOnlineBookingEmail = (values) => {
+    return `${header}
+            <p>
+                <b>Hello Admin!</b>, 
+                <br /> <br />
+                A new bookings has been received at hotbym.com
+                <br /> <br />
+                Order ID: ${values === null || values === void 0 ? void 0 : values.orderId}
+                <br />
+                Check In: ${values === null || values === void 0 ? void 0 : values.checkIn}
+                <br /> 
+                Check Out: ${values === null || values === void 0 ? void 0 : values.checkOut}
+                <br /> 
+                Room: ${values === null || values === void 0 ? void 0 : values.room}
+                <br /> 
+                Payment Status: Complete
+                <br /> <br />
+                Payment Channel: ${values === null || values === void 0 ? void 0 : values.channel}
+                <br />
+                Total Amount: ${values === null || values === void 0 ? void 0 : values.amount}
+                <br /><br />
+            </p>
+            ${footer}
+            `;
+};
+exports.adminOnlineBookingEmail = adminOnlineBookingEmail;
