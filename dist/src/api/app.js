@@ -20,7 +20,7 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 //connect();
 const app = (0, express_1.default)();
 // app.use(cors({credentials: true, origin: ["https://hotbym.com", /\.hotbym\.com$/, "http://localhost:3000", "http://localhost:3001", "https://yrvcnztcqm.us-east-1.awsapprunner.com" ]}));
-app.use((0, cors_1.default)({ credentials: true, origin: ["https://hotbym.com", "https://portal.hotbym.com", "https://atom.hotbym.com", /\.hotbym\.com$/] }));
+app.use((0, cors_1.default)({ credentials: true, origin: true }));
 const swaggerOptions = {
     swaggerDefinition: {
         openapi: '3.0.0',
