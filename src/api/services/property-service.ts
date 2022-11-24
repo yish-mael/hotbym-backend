@@ -6,6 +6,8 @@ interface IProperty {
     stateId: number,
     userId: number,
     name: string,
+    email: string,
+    telephone: string,
     status: string,
     address: string,
     description: string,
@@ -39,9 +41,9 @@ class PropertyService{
 
     static async create(values: IProperty)
     {
-        const { categoryId, stateId, userId, name, status, address, description } = values;
+        const { categoryId, stateId, userId, name, email, telephone, status, address, description } = values;
         
-        const [property, created] = await PropertyModel.findOrCreate({ where: { categoryId, stateId, userId, name, status, address, description }});
+        const [property, created] = await PropertyModel.findOrCreate({ where: { categoryId, stateId, userId, name, email, telephone, status, address, description }});
         if(created == false) throw "Property already exists.";
         return property;
     }

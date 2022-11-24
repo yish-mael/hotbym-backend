@@ -45,6 +45,14 @@ Property.init({
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
     },
+    email: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true,
+    },
+    telephone: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true,
+    },
     status: {
         type: sequelize_1.DataTypes.ENUM("pending", "active", "inactive"),
         defaultValue: "pending",

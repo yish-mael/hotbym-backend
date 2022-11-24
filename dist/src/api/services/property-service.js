@@ -33,8 +33,8 @@ class PropertyService {
     }
     static create(values) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { categoryId, stateId, userId, name, status, address, description } = values;
-            const [property, created] = yield models_1.PropertyModel.findOrCreate({ where: { categoryId, stateId, userId, name, status, address, description } });
+            const { categoryId, stateId, userId, name, email, telephone, status, address, description } = values;
+            const [property, created] = yield models_1.PropertyModel.findOrCreate({ where: { categoryId, stateId, userId, name, email, telephone, status, address, description } });
             if (created == false)
                 throw "Property already exists.";
             return property;

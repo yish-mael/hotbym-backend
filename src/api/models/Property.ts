@@ -10,6 +10,8 @@ import User from './User';
     declare stateId: number;
     declare userId: number;
     declare name: string;
+    declare email: string;
+    declare telephone: string;
     declare status: string;
     declare address: string;
     declare description: string;
@@ -49,6 +51,14 @@ import User from './User';
     name: {
         type: DataTypes.STRING,
         allowNull: false,
+    },
+    email: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    telephone: {
+        type: DataTypes.STRING,
+        allowNull: true,
     },
     status: {
         type: DataTypes.ENUM("pending", "active", "inactive"),

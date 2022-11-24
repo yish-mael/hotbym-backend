@@ -62,9 +62,10 @@ class AuthenticationService{
     {
         const user: any = await UserService.getWhere({email: credentials.email});
         if(user.length < 1) throw {email: "Email doesn't exists."};
-
+        
         const match = await bcrypt.compare(credentials.password, user[0].password);
         if (!match) throw {password: "Invalid password."};
+        if (user[0]?.status != "active") throw "Your account is inactive." ;
         console.log(user);
         return [ this.generateToken(user[0].dataValues), await this.generateRefreshToken(user[0].dataValues), user[0].roleId, user[0].id ];
     }

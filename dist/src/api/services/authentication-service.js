@@ -62,6 +62,7 @@ class AuthenticationService {
         });
     }
     static signIn(credentials) {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const user = yield user_service_1.default.getWhere({ email: credentials.email });
             if (user.length < 1)
@@ -69,6 +70,8 @@ class AuthenticationService {
             const match = yield bcrypt_1.default.compare(credentials.password, user[0].password);
             if (!match)
                 throw { password: "Invalid password." };
+            if (((_a = user[0]) === null || _a === void 0 ? void 0 : _a.status) != "active")
+                throw "Your account is inactive.";
             console.log(user);
             return [this.generateToken(user[0].dataValues), yield this.generateRefreshToken(user[0].dataValues), user[0].roleId, user[0].id];
         });
