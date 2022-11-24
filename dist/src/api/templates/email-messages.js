@@ -163,7 +163,7 @@ const userBookingOfflineEmail = (values) => {
                 <br /> <br />
                 Your booking has been received at hotbym.com
                 <br /> <br />
-                Order ID: ${values === null || values === void 0 ? void 0 : values.orderId}
+                Order ID: HB-${values === null || values === void 0 ? void 0 : values.orderId}
                 <br />
                 Check In: ${values === null || values === void 0 ? void 0 : values.checkIn}
                 <br /> 
@@ -175,7 +175,7 @@ const userBookingOfflineEmail = (values) => {
                 <br /> <br />
                 Bank: ${values === null || values === void 0 ? void 0 : values.bank}
                 <br />
-                Account Name: ${values === null || values === void 0 ? void 0 : values.name}
+                Account Name: ${values === null || values === void 0 ? void 0 : values.accountName}
                 <br />
                 Account NO.: ${values === null || values === void 0 ? void 0 : values.accountNo}
                 <br />
@@ -235,7 +235,7 @@ const adminOfflineBookingEmail = (values) => {
                 <br /> <br />
                 Bank: ${values === null || values === void 0 ? void 0 : values.bank}
                 <br />
-                Account Name: ${values === null || values === void 0 ? void 0 : values.bankName}
+                Account Name: ${values === null || values === void 0 ? void 0 : values.accountName}
                 <br />
                 Account NO.: ${values === null || values === void 0 ? void 0 : values.accountNo}
                 <br />

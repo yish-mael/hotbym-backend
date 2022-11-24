@@ -26,7 +26,7 @@ class BookingService {
     }
     static getWhere(criteria) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield models_1.BookingModel.findAll({ where: criteria, include: [models_1.RoomModel] });
+            return yield models_1.BookingModel.findAll({ where: criteria, include: [models_1.RoomModel, models_1.UserModel] });
         });
     }
     static create(values) {

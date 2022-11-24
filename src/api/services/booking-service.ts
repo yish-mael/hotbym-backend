@@ -36,7 +36,7 @@ class BookingService{
 
     static async getWhere(criteria: any)
     {
-        return await BookingModel.findAll({ where: criteria, include: [RoomModel] });
+        return await BookingModel.findAll({ where: criteria, include: [RoomModel, UserModel] });
     }
 
 
