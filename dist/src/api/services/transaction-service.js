@@ -39,48 +39,55 @@ class TransactionService {
         });
     }
     static create(values) {
-        var _a;
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("Here now now nowx xxxx");
             const { userId, orderId, paymentId, reference, status, amount } = values;
-            // console.log(values);
+            console.log(values);
             const [transaction, created] = yield models_1.TransactionModel.findOrCreate({ where: { userId, orderId, paymentId, reference, status, amount } });
             if (created == false)
                 throw "Transaction already exists.";
-            const paymentDetails = yield payment_service_1.default.getWhere({ id: paymentId });
+            console.log("next one: ", transaction);
+            // console.log("Payment : ", paymentId);
+            const paymentDetails = yield payment_service_1.default.getById(paymentId);
+            // console.log("Payment : ", paymentDetails);
             const bookingDetails = yield booking_service_1.default.getWhere({ orderId: orderId });
-            const userDetails = yield user_service_1.default.getWhere({ id: userId });
-            const roomDetails = yield room_service_1.default.getWhere({ id: bookingDetails[0].roomId });
-            if (((_a = paymentDetails[0]) === null || _a === void 0 ? void 0 : _a.type) == "offline") {
+            // console.log("Bookings : ", bookingDetails[0]);
+            const userDetails = yield user_service_1.default.getById(userId);
+            // console.log("User : ", userDetails);
+            const roomDetails = yield room_service_1.default.getById(bookingDetails[0].roomId);
+            //console.log("room : ", roomDetails?);
+            if ((paymentDetails === null || paymentDetails === void 0 ? void 0 : paymentDetails.type) == "offline") {
                 const offlineObj = {
-                    firstName: userDetails[0].firstName,
+                    firstName: userDetails === null || userDetails === void 0 ? void 0 : userDetails.firstName,
                     orderId: orderId,
                     checkIn: bookingDetails[0].arrivalDate,
                     checkOut: bookingDetails[0].departureDate,
-                    room: roomDetails[0].roomType,
-                    bank: paymentDetails[0].bankName,
-                    accountName: paymentDetails[0].accountName,
-                    accountNo: paymentDetails[0].accountNumber,
+                    room: roomDetails === null || roomDetails === void 0 ? void 0 : roomDetails.roomType,
+                    bank: paymentDetails.bankName,
+                    accountName: paymentDetails.accountName,
+                    accountNo: paymentDetails.accountNumber,
                     amount: amount
                 };
+                console.log(offlineObj);
                 const userMail = (0, email_messages_1.userBookingOfflineEmail)(offlineObj);
                 const adminMail = (0, email_messages_1.adminOfflineBookingEmail)(offlineObj);
-                yield mail_service_1.default.mailer({ subject: "Hotbym Booking", recipient: userDetails[0].email, message: userMail });
+                yield mail_service_1.default.mailer({ subject: "Hotbym Booking", recipient: (userDetails === null || userDetails === void 0 ? void 0 : userDetails.email) || "", message: userMail });
                 yield mail_service_1.default.mailer({ subject: "New Hotbym Booking", recipient: 'reservations@hotbym.com', message: adminMail });
                 yield mail_service_1.default.mailer({ subject: "New Hotbym Booking", recipient: 'customer@hotbym.com', message: adminMail });
             }
             else {
                 const onlineObj = {
-                    firstName: userDetails[0].firstName,
+                    firstName: userDetails === null || userDetails === void 0 ? void 0 : userDetails.firstName,
                     orderId: orderId,
                     checkIn: bookingDetails[0].arrivalDate,
                     checkOut: bookingDetails[0].departureDate,
-                    room: roomDetails[0].roomType,
-                    channel: paymentDetails[0].title,
+                    room: roomDetails === null || roomDetails === void 0 ? void 0 : roomDetails.roomType,
+                    channel: paymentDetails === null || paymentDetails === void 0 ? void 0 : paymentDetails.title,
                     amount: amount
                 };
                 const userMail = (0, email_messages_1.userBookingOnlineEmail)(onlineObj);
                 const adminMail = (0, email_messages_1.adminOnlineBookingEmail)(onlineObj);
-                yield mail_service_1.default.mailer({ subject: "Hotbym Booking", recipient: userDetails[0].email, message: userMail });
+                yield mail_service_1.default.mailer({ subject: "Hotbym Booking", recipient: (userDetails === null || userDetails === void 0 ? void 0 : userDetails.email) || "", message: userMail });
                 yield mail_service_1.default.mailer({ subject: "New Hotbym Booking", recipient: 'reservations@hotbym.com', message: adminMail });
                 yield mail_service_1.default.mailer({ subject: "New Hotbym Booking", recipient: 'customer@hotbym.com', message: adminMail });
                 // const hotelMail  = adminOfflineBookingEmail({ }); 

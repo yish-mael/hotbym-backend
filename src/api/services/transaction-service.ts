@@ -42,53 +42,62 @@ class TransactionService{
 
     static async create(values: ITransaction)
     {
+        console.log("Here now now nowx xxxx");
         const { userId, orderId, paymentId, reference, status, amount } = values;
 
-        // console.log(values);
+        console.log(values);
         
         const [transaction, created] = await TransactionModel.findOrCreate({ where: { userId, orderId, paymentId, reference, status, amount }});
         if(created == false) throw "Transaction already exists.";
 
-        const paymentDetails = await PaymentService.getWhere({ id: paymentId });
+        console.log("next one: ", transaction);
+
+        // console.log("Payment : ", paymentId);
+        const paymentDetails = await PaymentService.getById(paymentId);
+        // console.log("Payment : ", paymentDetails);
         const bookingDetails = await BookingService.getWhere({ orderId: orderId });
-        const userDetails = await UserService.getWhere({ id: userId });
-        const roomDetails = await RoomService.getWhere({ id: bookingDetails[0].roomId });
+        // console.log("Bookings : ", bookingDetails[0]);
+        const userDetails = await UserService.getById(userId);
+        // console.log("User : ", userDetails);
+        const roomDetails = await RoomService.getById(bookingDetails[0].roomId);
+        //console.log("room : ", roomDetails?);
         
-        if (paymentDetails[0]?.type == "offline"){
+        if (paymentDetails?.type == "offline"){
 
             const offlineObj = {
-                firstName: userDetails[0].firstName,
+                firstName: userDetails?.firstName,
                 orderId: orderId,
                 checkIn: bookingDetails[0].arrivalDate,
                 checkOut: bookingDetails[0].departureDate,
-                room: roomDetails[0].roomType,
-                bank: paymentDetails[0].bankName,
-                accountName: paymentDetails[0].accountName,
-                accountNo: paymentDetails[0].accountNumber,
+                room: roomDetails?.roomType,
+                bank: paymentDetails.bankName,
+                accountName: paymentDetails.accountName,
+                accountNo: paymentDetails.accountNumber,
                 amount: amount 
             }
+            console.log(offlineObj);
             const userMail  = userBookingOfflineEmail(offlineObj); 
             const adminMail  = adminOfflineBookingEmail(offlineObj); 
 
-            await MailService.mailer({ subject: "Hotbym Booking", recipient: userDetails[0].email, message: userMail });
+            await MailService.mailer({ subject: "Hotbym Booking", recipient: userDetails?.email|| "", message: userMail });
             await MailService.mailer({ subject: "New Hotbym Booking", recipient: 'reservations@hotbym.com', message: adminMail });
             await MailService.mailer({ subject: "New Hotbym Booking", recipient: 'customer@hotbym.com', message: adminMail });
             
         }else{
 
             const onlineObj = {
-                firstName: userDetails[0].firstName,
+                firstName: userDetails?.firstName,
                 orderId: orderId,
                 checkIn: bookingDetails[0].arrivalDate,
                 checkOut: bookingDetails[0].departureDate,
-                room: roomDetails[0].roomType,
-                channel: paymentDetails[0].title,
+                room: roomDetails?.roomType,
+                channel: paymentDetails?.title,
                 amount: amount 
             }
 
             const userMail  = userBookingOnlineEmail(onlineObj); 
             const adminMail  = adminOnlineBookingEmail(onlineObj); 
-            await MailService.mailer({ subject: "Hotbym Booking", recipient: userDetails[0].email, message: userMail });
+            await MailService.mailer({ subject: "Hotbym Booking", recipient: userDetails?.email|| "", message: userMail });
             await MailService.mailer({ subject: "New Hotbym Booking", recipient: 'reservations@hotbym.com', message: adminMail });
             await MailService.mailer({ subject: "New Hotbym Booking", recipient: 'customer@hotbym.com', message: adminMail });
             // const hotelMail  = adminOfflineBookingEmail({ }); 
