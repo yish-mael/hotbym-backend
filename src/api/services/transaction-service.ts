@@ -1,9 +1,10 @@
 import { PaymentModel, TransactionModel, UserModel } from "../models";
 import Room from "../models/Room";
-import { adminOfflineBookingEmail, adminOnlineBookingEmail, userBookingOfflineEmail, userBookingOnlineEmail } from "../templates/email-messages";
+import { adminOfflineBookingEmail, adminOnlineBookingEmail, hotelOnlineBookingEmail, userBookingOfflineEmail, userBookingOnlineEmail } from "../templates/email-messages";
 import BookingService from "./booking-service";
 import MailService from "./mail-service";
 import PaymentService from "./payment-service";
+import PropertyService from "./property-service";
 import RoomService from "./room-service";
 import UserService from "./user-service";
 
@@ -50,7 +51,7 @@ class TransactionService{
         const [transaction, created] = await TransactionModel.findOrCreate({ where: { userId, orderId, paymentId, reference, status, amount }});
         if(created == false) throw "Transaction already exists.";
 
-        console.log("next one: ", transaction);
+        //console.log("next one: ", transaction);
 
         // console.log("Payment : ", paymentId);
         const paymentDetails = await PaymentService.getById(paymentId);
@@ -61,6 +62,8 @@ class TransactionService{
         // console.log("User : ", userDetails);
         const roomDetails = await RoomService.getById(bookingDetails[0].roomId);
         //console.log("room : ", roomDetails?);
+
+        const propertyDetails = await PropertyService.getById(roomDetails?.propertyId || 1);
         
         if (paymentDetails?.type == "offline"){
 
@@ -97,9 +100,11 @@ class TransactionService{
 
             const userMail  = userBookingOnlineEmail(onlineObj); 
             const adminMail  = adminOnlineBookingEmail(onlineObj); 
+            const hotelMail  = hotelOnlineBookingEmail(onlineObj); 
             await MailService.mailer({ subject: "Hotbym Booking", recipient: userDetails?.email|| "", message: userMail });
             await MailService.mailer({ subject: "New Hotbym Booking", recipient: 'reservations@hotbym.com', message: adminMail });
             await MailService.mailer({ subject: "New Hotbym Booking", recipient: 'customer@hotbym.com', message: adminMail });
+            await MailService.mailer({ subject: "New Hotbym Booking", recipient: propertyDetails?.email || "", message: hotelMail });
             // const hotelMail  = adminOfflineBookingEmail({ }); 
 
         }
@@ -110,6 +115,25 @@ class TransactionService{
 
     static async update(id: number, values: ITransaction)
     {
+        if (values?.status == "completed"){
+            const transaction = await this.getById(id);
+            const bookingDetails = await BookingService.getWhere({ orderId: transaction?.orderId });
+            const roomDetails = await RoomService.getById(bookingDetails[0].roomId);
+            const userDetails = await UserService.getById(transaction?.userId || 1);
+            const propertyDetails = await PropertyService.getById(roomDetails?.propertyId || 1);
+
+            const offlineObj = {
+                orderId: transaction?.orderId,
+                checkIn: bookingDetails[0].arrivalDate,
+                checkOut: bookingDetails[0].departureDate,
+                room: roomDetails?.roomType,
+                amount: transaction?.amount,
+                firstName: userDetails?.firstName,
+                lastName: userDetails?.lastName
+            }
+            const hotelMail  = hotelOnlineBookingEmail(offlineObj);
+            await MailService.mailer({ subject: "New Hotbym Booking", recipient: propertyDetails?.email || "", message: hotelMail });
+        }
         return await TransactionModel.update( values, { where: { id: id } });
     }
 

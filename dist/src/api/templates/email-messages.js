@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.adminOnlineBookingEmail = exports.adminOfflineBookingEmail = exports.userBookingOnlineEmail = exports.userBookingOfflineEmail = exports.requestEmail = exports.contactEmail = exports.accountCreatedEmail = exports.forgotPasswordEmail = void 0;
+exports.hotelOnlineBookingEmail = exports.hotelOfflineBookingEmail = exports.adminOnlineBookingEmail = exports.adminOfflineBookingEmail = exports.userBookingOnlineEmail = exports.userBookingOfflineEmail = exports.requestEmail = exports.contactEmail = exports.accountCreatedEmail = exports.forgotPasswordEmail = void 0;
 const header = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                 <html xmlns="http://www.w3.org/1999/xhtml">
                 <head>
@@ -272,3 +272,43 @@ const adminOnlineBookingEmail = (values) => {
             `;
 };
 exports.adminOnlineBookingEmail = adminOnlineBookingEmail;
+const hotelOnlineBookingEmail = (values) => {
+    return `${header}
+            <p>
+                <b>Hello Hotel Manager!</b>, 
+                <br /> <br />
+                A new bookings has been received at hotbym.com
+                <br /> <br />
+                Order ID: ${values === null || values === void 0 ? void 0 : values.orderId}
+                <br />
+                Check In: ${values === null || values === void 0 ? void 0 : values.checkIn}
+                <br /> 
+                Check Out: ${values === null || values === void 0 ? void 0 : values.checkOut}
+                <br /> 
+                Room: ${values === null || values === void 0 ? void 0 : values.room}
+                <br /><br />
+            </p>
+            ${footer}
+            `;
+};
+exports.hotelOnlineBookingEmail = hotelOnlineBookingEmail;
+const hotelOfflineBookingEmail = (values) => {
+    return `${header}
+            <p>
+                <b>Hello Hotel Manager!</b>, 
+                <br /> <br />
+                A new bookings has been received at hotbym.com
+                <br /> <br />
+                Order ID: ${values === null || values === void 0 ? void 0 : values.orderId}
+                <br />
+                Check In: ${values === null || values === void 0 ? void 0 : values.checkIn}
+                <br /> 
+                Check Out: ${values === null || values === void 0 ? void 0 : values.checkOut}
+                <br /> 
+                Room: ${values === null || values === void 0 ? void 0 : values.room}
+                <br /><br />
+            </p>
+            ${footer}
+            `;
+};
+exports.hotelOfflineBookingEmail = hotelOfflineBookingEmail;

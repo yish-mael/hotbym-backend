@@ -272,6 +272,46 @@ const adminOnlineBookingEmail = (values: any) => {
             `; 
     }
 
+const hotelOnlineBookingEmail = (values: any) => { 
+    return `${header}
+            <p>
+                <b>Hello Hotel Manager!</b>, 
+                <br /> <br />
+                A new bookings has been received at hotbym.com
+                <br /> <br />
+                Order ID: ${values?.orderId}
+                <br />
+                Check In: ${values?.checkIn}
+                <br /> 
+                Check Out: ${values?.checkOut}
+                <br /> 
+                Room: ${values?.room}
+                <br /><br />
+            </p>
+            ${footer}
+            `; 
+    }
+
+const hotelOfflineBookingEmail = (values: any) => { 
+    return `${header}
+            <p>
+                <b>Hello Hotel Manager!</b>, 
+                <br /> <br />
+                A new bookings has been received at hotbym.com
+                <br /> <br />
+                Order ID: ${values?.orderId}
+                <br />
+                Check In: ${values?.checkIn}
+                <br /> 
+                Check Out: ${values?.checkOut}
+                <br /> 
+                Room: ${values?.room}
+                <br /><br />
+            </p>
+            ${footer}
+            `; 
+    }
+
 export { 
         forgotPasswordEmail, 
         accountCreatedEmail, 
@@ -280,5 +320,7 @@ export {
         userBookingOfflineEmail, 
         userBookingOnlineEmail, 
         adminOfflineBookingEmail, 
-        adminOnlineBookingEmail 
+        adminOnlineBookingEmail,
+        hotelOfflineBookingEmail,
+        hotelOnlineBookingEmail 
     }
