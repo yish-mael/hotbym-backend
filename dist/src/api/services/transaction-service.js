@@ -50,14 +50,13 @@ class TransactionService {
             //console.log("next one: ", transaction);
             // console.log("Payment : ", paymentId);
             const paymentDetails = yield payment_service_1.default.getById(paymentId);
-            // console.log("Payment : ", paymentDetails);
+            //console.log("Payment : ", paymentDetails);
             const bookingDetails = yield booking_service_1.default.getWhere({ orderId: orderId });
-            // console.log("Bookings : ", bookingDetails[0]);
+            //console.log("Bookings : ", bookingDetails[0]);
             const userDetails = yield user_service_1.default.getById(userId);
-            // console.log("User : ", userDetails);
+            //console.log("User : ", userDetails);
             const roomDetails = yield room_service_1.default.getById(bookingDetails[0].roomId);
-            //console.log("room : ", roomDetails?);
-            const propertyDetails = yield property_service_1.default.getById((roomDetails === null || roomDetails === void 0 ? void 0 : roomDetails.propertyId) || 1);
+            //console.log("room : ", roomDetails);
             if ((paymentDetails === null || paymentDetails === void 0 ? void 0 : paymentDetails.type) == "offline") {
                 const offlineObj = {
                     firstName: userDetails === null || userDetails === void 0 ? void 0 : userDetails.firstName,
@@ -73,9 +72,9 @@ class TransactionService {
                 console.log(offlineObj);
                 const userMail = (0, email_messages_1.userBookingOfflineEmail)(offlineObj);
                 const adminMail = (0, email_messages_1.adminOfflineBookingEmail)(offlineObj);
-                yield mail_service_1.default.mailer({ subject: "Hotbym Booking", recipient: (userDetails === null || userDetails === void 0 ? void 0 : userDetails.email) || "", message: userMail });
                 yield mail_service_1.default.mailer({ subject: "New Hotbym Booking", recipient: 'reservations@hotbym.com', message: adminMail });
                 yield mail_service_1.default.mailer({ subject: "New Hotbym Booking", recipient: 'customer@hotbym.com', message: adminMail });
+                yield mail_service_1.default.mailer({ subject: "Hotbym Booking", recipient: (userDetails === null || userDetails === void 0 ? void 0 : userDetails.email) || "", message: userMail });
             }
             else {
                 const onlineObj = {
@@ -87,13 +86,16 @@ class TransactionService {
                     channel: paymentDetails === null || paymentDetails === void 0 ? void 0 : paymentDetails.title,
                     amount: amount
                 };
+                console.log("online");
+                console.log(onlineObj);
                 const userMail = (0, email_messages_1.userBookingOnlineEmail)(onlineObj);
                 const adminMail = (0, email_messages_1.adminOnlineBookingEmail)(onlineObj);
-                const hotelMail = (0, email_messages_1.hotelOnlineBookingEmail)(onlineObj);
-                yield mail_service_1.default.mailer({ subject: "Hotbym Booking", recipient: (userDetails === null || userDetails === void 0 ? void 0 : userDetails.email) || "", message: userMail });
                 yield mail_service_1.default.mailer({ subject: "New Hotbym Booking", recipient: 'reservations@hotbym.com', message: adminMail });
                 yield mail_service_1.default.mailer({ subject: "New Hotbym Booking", recipient: 'customer@hotbym.com', message: adminMail });
+                const propertyDetails = yield property_service_1.default.getById((roomDetails === null || roomDetails === void 0 ? void 0 : roomDetails.propertyId) || 1);
+                const hotelMail = (0, email_messages_1.hotelOnlineBookingEmail)(onlineObj);
                 yield mail_service_1.default.mailer({ subject: "New Hotbym Booking", recipient: (propertyDetails === null || propertyDetails === void 0 ? void 0 : propertyDetails.email) || "", message: hotelMail });
+                yield mail_service_1.default.mailer({ subject: "Hotbym Booking", recipient: (userDetails === null || userDetails === void 0 ? void 0 : userDetails.email) || "", message: userMail });
                 // const hotelMail  = adminOfflineBookingEmail({ }); 
             }
             return transaction;

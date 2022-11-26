@@ -55,18 +55,17 @@ class TransactionService{
 
         // console.log("Payment : ", paymentId);
         const paymentDetails = await PaymentService.getById(paymentId);
-        // console.log("Payment : ", paymentDetails);
+        //console.log("Payment : ", paymentDetails);
         const bookingDetails = await BookingService.getWhere({ orderId: orderId });
-        // console.log("Bookings : ", bookingDetails[0]);
+        //console.log("Bookings : ", bookingDetails[0]);
         const userDetails = await UserService.getById(userId);
-        // console.log("User : ", userDetails);
+        //console.log("User : ", userDetails);
         const roomDetails = await RoomService.getById(bookingDetails[0].roomId);
-        //console.log("room : ", roomDetails?);
+        //console.log("room : ", roomDetails);
 
-        const propertyDetails = await PropertyService.getById(roomDetails?.propertyId || 1);
         
         if (paymentDetails?.type == "offline"){
-
+            
             const offlineObj = {
                 firstName: userDetails?.firstName,
                 orderId: orderId,
@@ -81,13 +80,13 @@ class TransactionService{
             console.log(offlineObj);
             const userMail  = userBookingOfflineEmail(offlineObj); 
             const adminMail  = adminOfflineBookingEmail(offlineObj); 
-
-            await MailService.mailer({ subject: "Hotbym Booking", recipient: userDetails?.email|| "", message: userMail });
+            
             await MailService.mailer({ subject: "New Hotbym Booking", recipient: 'reservations@hotbym.com', message: adminMail });
             await MailService.mailer({ subject: "New Hotbym Booking", recipient: 'customer@hotbym.com', message: adminMail });
+            await MailService.mailer({ subject: "Hotbym Booking", recipient: userDetails?.email|| "", message: userMail });
             
         }else{
-
+            
             const onlineObj = {
                 firstName: userDetails?.firstName,
                 orderId: orderId,
@@ -97,14 +96,17 @@ class TransactionService{
                 channel: paymentDetails?.title,
                 amount: amount 
             }
-
+            
+            console.log("online");
+            console.log(onlineObj);
             const userMail  = userBookingOnlineEmail(onlineObj); 
             const adminMail  = adminOnlineBookingEmail(onlineObj); 
-            const hotelMail  = hotelOnlineBookingEmail(onlineObj); 
-            await MailService.mailer({ subject: "Hotbym Booking", recipient: userDetails?.email|| "", message: userMail });
             await MailService.mailer({ subject: "New Hotbym Booking", recipient: 'reservations@hotbym.com', message: adminMail });
             await MailService.mailer({ subject: "New Hotbym Booking", recipient: 'customer@hotbym.com', message: adminMail });
+            const propertyDetails = await PropertyService.getById(roomDetails?.propertyId || 1);
+            const hotelMail  = hotelOnlineBookingEmail(onlineObj); 
             await MailService.mailer({ subject: "New Hotbym Booking", recipient: propertyDetails?.email || "", message: hotelMail });
+            await MailService.mailer({ subject: "Hotbym Booking", recipient: userDetails?.email|| "", message: userMail });
             // const hotelMail  = adminOfflineBookingEmail({ }); 
 
         }
