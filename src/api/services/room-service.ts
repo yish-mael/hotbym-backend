@@ -29,7 +29,7 @@ class RoomService{
 
     static async getById(id: number)
     {
-        return await RoomModel.findByPk(id);
+        return await RoomModel.findByPk(id, { include: [PropertyModel]});
     }
 
     static async addAmenities(id: number, amenities: number[])

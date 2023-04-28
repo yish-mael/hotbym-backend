@@ -169,6 +169,8 @@ const userBookingOfflineEmail = (values: any) => {
                 <br /> 
                 Check Out: ${values?.checkOut}
                 <br /> 
+                Accomodation: ${values?.accomodation}
+                <br /> 
                 Room: ${values?.room}
                 <br /> 
                 Payment Status: Pending
@@ -195,11 +197,13 @@ const userBookingOnlineEmail = (values: any) => {
                 <br /> <br />
                 Your booking has been received at hotbym.com
                 <br /> <br />
-                Order ID: ${values?.orderId}
+                Order ID: HB-${values?.orderId}
                 <br />
                 Check In: ${values?.checkIn}
                 <br /> 
                 Check Out: ${values?.checkOut}
+                <br /> 
+                Accomodation: ${values?.accomodation}
                 <br /> 
                 Room: ${values?.room}
                 <br /> 
@@ -209,8 +213,6 @@ const userBookingOnlineEmail = (values: any) => {
                 <br />
                 Total Amount: ${values?.amount}
                 <br /><br />
-
-                NOTE: Make sure to add the Order ID in your payment remarks.
             </p>
             ${footer}
             `; 
@@ -228,6 +230,8 @@ const adminOfflineBookingEmail = (values: any) => {
                 Check In: ${values?.checkIn}
                 <br /> 
                 Check Out: ${values?.checkOut}
+                <br /> 
+                Accomodation: ${values?.accomodation}
                 <br /> 
                 Room: ${values?.room}
                 <br /> 
@@ -258,6 +262,8 @@ const adminOnlineBookingEmail = (values: any) => {
                 Check In: ${values?.checkIn}
                 <br /> 
                 Check Out: ${values?.checkOut}
+                <br /> 
+                Accomodation: ${values?.accomodation}
                 <br /> 
                 Room: ${values?.room}
                 <br /> 

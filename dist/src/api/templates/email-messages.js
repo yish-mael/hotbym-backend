@@ -169,6 +169,8 @@ const userBookingOfflineEmail = (values) => {
                 <br /> 
                 Check Out: ${values === null || values === void 0 ? void 0 : values.checkOut}
                 <br /> 
+                Accomodation: ${values === null || values === void 0 ? void 0 : values.accomodation}
+                <br /> 
                 Room: ${values === null || values === void 0 ? void 0 : values.room}
                 <br /> 
                 Payment Status: Pending
@@ -195,11 +197,13 @@ const userBookingOnlineEmail = (values) => {
                 <br /> <br />
                 Your booking has been received at hotbym.com
                 <br /> <br />
-                Order ID: ${values === null || values === void 0 ? void 0 : values.orderId}
+                Order ID: HB-${values === null || values === void 0 ? void 0 : values.orderId}
                 <br />
                 Check In: ${values === null || values === void 0 ? void 0 : values.checkIn}
                 <br /> 
                 Check Out: ${values === null || values === void 0 ? void 0 : values.checkOut}
+                <br /> 
+                Accomodation: ${values === null || values === void 0 ? void 0 : values.accomodation}
                 <br /> 
                 Room: ${values === null || values === void 0 ? void 0 : values.room}
                 <br /> 
@@ -209,8 +213,6 @@ const userBookingOnlineEmail = (values) => {
                 <br />
                 Total Amount: ${values === null || values === void 0 ? void 0 : values.amount}
                 <br /><br />
-
-                NOTE: Make sure to add the Order ID in your payment remarks.
             </p>
             ${footer}
             `;
@@ -228,6 +230,8 @@ const adminOfflineBookingEmail = (values) => {
                 Check In: ${values === null || values === void 0 ? void 0 : values.checkIn}
                 <br /> 
                 Check Out: ${values === null || values === void 0 ? void 0 : values.checkOut}
+                <br /> 
+                Accomodation: ${values === null || values === void 0 ? void 0 : values.accomodation}
                 <br /> 
                 Room: ${values === null || values === void 0 ? void 0 : values.room}
                 <br /> 
@@ -258,6 +262,8 @@ const adminOnlineBookingEmail = (values) => {
                 Check In: ${values === null || values === void 0 ? void 0 : values.checkIn}
                 <br /> 
                 Check Out: ${values === null || values === void 0 ? void 0 : values.checkOut}
+                <br /> 
+                Accomodation: ${values === null || values === void 0 ? void 0 : values.accomodation}
                 <br /> 
                 Room: ${values === null || values === void 0 ? void 0 : values.room}
                 <br /> 

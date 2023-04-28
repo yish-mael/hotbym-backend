@@ -26,7 +26,7 @@ class RoomService {
     }
     static getById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield models_1.RoomModel.findByPk(id);
+            return yield models_1.RoomModel.findByPk(id, { include: [models_1.PropertyModel] });
         });
     }
     static addAmenities(id, amenities) {

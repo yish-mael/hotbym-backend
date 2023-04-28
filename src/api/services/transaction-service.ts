@@ -62,6 +62,8 @@ class TransactionService{
         //console.log("User : ", userDetails);
         const roomDetails = await RoomService.getById(bookingDetails[0].roomId);
         //console.log("room : ", roomDetails);
+        const propertyDetailsx = await PropertyService.getById(roomDetails?.propertyId || 1);
+        //console.log("property : ", propertyDetails);
 
         
         if (paymentDetails?.type == "offline"){
@@ -71,6 +73,7 @@ class TransactionService{
                 orderId: orderId,
                 checkIn: bookingDetails[0].arrivalDate,
                 checkOut: bookingDetails[0].departureDate,
+                accomodation: propertyDetailsx?.name,
                 room: roomDetails?.roomType,
                 bank: paymentDetails.bankName,
                 accountName: paymentDetails.accountName,
@@ -93,6 +96,7 @@ class TransactionService{
                 checkIn: bookingDetails[0].arrivalDate,
                 checkOut: bookingDetails[0].departureDate,
                 room: roomDetails?.roomType,
+                accomodation: propertyDetailsx?.name,
                 channel: paymentDetails?.title,
                 amount: amount 
             }

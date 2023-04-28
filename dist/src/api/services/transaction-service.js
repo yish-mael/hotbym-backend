@@ -57,12 +57,15 @@ class TransactionService {
             //console.log("User : ", userDetails);
             const roomDetails = yield room_service_1.default.getById(bookingDetails[0].roomId);
             //console.log("room : ", roomDetails);
+            const propertyDetailsx = yield property_service_1.default.getById((roomDetails === null || roomDetails === void 0 ? void 0 : roomDetails.propertyId) || 1);
+            //console.log("property : ", propertyDetails);
             if ((paymentDetails === null || paymentDetails === void 0 ? void 0 : paymentDetails.type) == "offline") {
                 const offlineObj = {
                     firstName: userDetails === null || userDetails === void 0 ? void 0 : userDetails.firstName,
                     orderId: orderId,
                     checkIn: bookingDetails[0].arrivalDate,
                     checkOut: bookingDetails[0].departureDate,
+                    accomodation: propertyDetailsx === null || propertyDetailsx === void 0 ? void 0 : propertyDetailsx.name,
                     room: roomDetails === null || roomDetails === void 0 ? void 0 : roomDetails.roomType,
                     bank: paymentDetails.bankName,
                     accountName: paymentDetails.accountName,
@@ -83,6 +86,7 @@ class TransactionService {
                     checkIn: bookingDetails[0].arrivalDate,
                     checkOut: bookingDetails[0].departureDate,
                     room: roomDetails === null || roomDetails === void 0 ? void 0 : roomDetails.roomType,
+                    accomodation: propertyDetailsx === null || propertyDetailsx === void 0 ? void 0 : propertyDetailsx.name,
                     channel: paymentDetails === null || paymentDetails === void 0 ? void 0 : paymentDetails.title,
                     amount: amount
                 };
