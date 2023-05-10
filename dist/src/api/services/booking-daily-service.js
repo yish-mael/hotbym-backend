@@ -25,15 +25,15 @@ class BookingDailyService {
     static getWhere(criteria) {
         return __awaiter(this, void 0, void 0, function* () {
             const bookingDaily = yield models_1.BookingDailyModel.findAll({ where: criteria, order: [['quantity', 'DESC']] });
-            console.log(bookingDaily);
+            // console.log(bookingDaily);
             return bookingDaily;
         });
     }
     static create(values) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { roomId, date, timeIn, timeOut, quantity } = values;
+            const { orderId, roomId, date, timeIn, timeOut, quantity } = values;
             // console.log(values);
-            const [bookingDaily, created] = yield models_1.BookingDailyModel.findOrCreate({ where: { roomId, date, timeIn, timeOut, quantity } });
+            const [bookingDaily, created] = yield models_1.BookingDailyModel.findOrCreate({ where: { orderId, roomId, date, timeIn, timeOut, quantity } });
             if (created == false)
                 throw "Bookings Daily already exists.";
             return bookingDaily;

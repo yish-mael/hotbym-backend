@@ -163,15 +163,19 @@ const userBookingOfflineEmail = (values: any) => {
                 <br /> <br />
                 Your booking has been received at hotbym.com
                 <br /> <br />
+                Accomodation: ${values?.accomodation}
+                <br /> 
+                Room: ${values?.room}
+                <br /> 
                 Order ID: HB-${values?.orderId}
                 <br />
                 Check In: ${values?.checkIn}
                 <br /> 
                 Check Out: ${values?.checkOut}
                 <br /> 
-                Accomodation: ${values?.accomodation}
+                Time In: ${values?.timeIn}
                 <br /> 
-                Room: ${values?.room}
+                Time Out: ${values?.timeOut}
                 <br /> 
                 Payment Status: Pending
                 <br /> <br />
@@ -197,15 +201,19 @@ const userBookingOnlineEmail = (values: any) => {
                 <br /> <br />
                 Your booking has been received at hotbym.com
                 <br /> <br />
+                Accomodation: ${values?.accomodation}
+                <br /> 
+                Room: ${values?.room}
+                <br /> 
                 Order ID: HB-${values?.orderId}
                 <br />
                 Check In: ${values?.checkIn}
                 <br /> 
                 Check Out: ${values?.checkOut}
                 <br /> 
-                Accomodation: ${values?.accomodation}
+                Time In: ${values?.timeIn}
                 <br /> 
-                Room: ${values?.room}
+                Time Out: ${values?.timeOut}
                 <br /> 
                 Payment Status: Complete
                 <br /> <br />
@@ -225,15 +233,19 @@ const adminOfflineBookingEmail = (values: any) => {
                 <br /> <br />
                 A new bookings has been received at hotbym.com
                 <br /> <br />
-                Order ID: ${values?.orderId}
+                Accomodation: ${values?.accomodation}
+                <br /> 
+                Room: ${values?.room}
+                <br /> 
+                Order ID: HB-${values?.orderId}
                 <br />
                 Check In: ${values?.checkIn}
                 <br /> 
                 Check Out: ${values?.checkOut}
                 <br /> 
-                Accomodation: ${values?.accomodation}
+                Time In: ${values?.timeIn}
                 <br /> 
-                Room: ${values?.room}
+                Time Out: ${values?.timeOut}
                 <br /> 
                 Payment Status: Pending
                 <br /> <br />
@@ -257,15 +269,19 @@ const adminOnlineBookingEmail = (values: any) => {
                 <br /> <br />
                 A new bookings has been received at hotbym.com
                 <br /> <br />
-                Order ID: ${values?.orderId}
+                Accomodation: ${values?.accomodation}
+                <br /> 
+                Room: ${values?.room}
+                <br /> 
+                Order ID: HB-${values?.orderId}
                 <br />
                 Check In: ${values?.checkIn}
                 <br /> 
                 Check Out: ${values?.checkOut}
                 <br /> 
-                Accomodation: ${values?.accomodation}
+                Time In: ${values?.timeIn}
                 <br /> 
-                Room: ${values?.room}
+                Time Out: ${values?.timeOut}
                 <br /> 
                 Payment Status: Complete
                 <br /> <br />
@@ -285,11 +301,19 @@ const hotelOnlineBookingEmail = (values: any) => {
                 <br /> <br />
                 A new bookings has been received at hotbym.com
                 <br /> <br />
-                Order ID: ${values?.orderId}
+                Accomodation: ${values?.accomodation}
+                <br /> 
+                Room: ${values?.room}
+                <br /> 
+                Order ID: HB-${values?.orderId}
                 <br />
                 Check In: ${values?.checkIn}
                 <br /> 
                 Check Out: ${values?.checkOut}
+                <br /> 
+                Time In: ${values?.timeIn}
+                <br /> 
+                Time Out: ${values?.timeOut}
                 <br /> 
                 Room: ${values?.room}
                 <br /><br />
@@ -305,11 +329,19 @@ const hotelOfflineBookingEmail = (values: any) => {
                 <br /> <br />
                 A new bookings has been received at hotbym.com
                 <br /> <br />
-                Order ID: ${values?.orderId}
+                Accomodation: ${values?.accomodation}
+                <br /> 
+                Room: ${values?.room}
+                <br /> 
+                Order ID: HB-${values?.orderId}
                 <br />
                 Check In: ${values?.checkIn}
                 <br /> 
                 Check Out: ${values?.checkOut}
+                <br /> 
+                Time In: ${values?.timeIn}
+                <br /> 
+                Time Out: ${values?.timeOut}
                 <br /> 
                 Room: ${values?.room}
                 <br /><br />

@@ -1,6 +1,7 @@
 import { BookingDailyModel } from "../models";
 
 interface IBookingDaily {
+    orderId: string,
     roomId: number,
     date: string,
     timeIn?: string | null,
@@ -27,18 +28,18 @@ class BookingDailyService{
     static async getWhere(criteria: any)
     {
         const bookingDaily = await BookingDailyModel.findAll({ where: criteria, order: [['quantity', 'DESC']] });
-        console.log(bookingDaily);
+        // console.log(bookingDaily);
         return bookingDaily
     }
 
 
     static async create(values: IBookingDaily)
     {
-        const { roomId, date, timeIn, timeOut, quantity} = values;
+        const { orderId, roomId, date, timeIn, timeOut, quantity} = values;
 
         // console.log(values);
         
-        const [bookingDaily, created] = await BookingDailyModel.findOrCreate({ where: {roomId, date, timeIn, timeOut, quantity }});
+        const [bookingDaily, created] = await BookingDailyModel.findOrCreate({ where: {orderId, roomId, date, timeIn, timeOut, quantity }});
         if(created == false) throw "Bookings Daily already exists.";
         return bookingDaily;
     }

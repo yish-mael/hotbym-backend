@@ -10,6 +10,7 @@ import Room from './Room';
     declare timeIn: string;
     declare timeOut: string;
     declare quantity: number;
+    declare  orderId: string;
   }
 
   BookingDaily.init({
@@ -43,6 +44,10 @@ import Room from './Room';
         type: DataTypes.INTEGER,
         allowNull: false,
     },
+    orderId: {
+      type: DataTypes.STRING,
+      allowNull: true,
+  },
 
   }, {
       tableName: "daily_bookings",

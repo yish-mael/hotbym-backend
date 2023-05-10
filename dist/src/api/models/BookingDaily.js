@@ -39,6 +39,10 @@ BookingDaily.init({
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
     },
+    orderId: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true,
+    },
 }, {
     tableName: "daily_bookings",
     sequelize: connection_1.sequelize

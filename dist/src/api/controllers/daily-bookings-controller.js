@@ -49,9 +49,9 @@ class DailyBookingsController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 if (((_a = req.body) === null || _a === void 0 ? void 0 : _a.type) == "hourly") {
-                    //console.log(req.body);
-                    const dailyBookingCheckD = yield booking_daily_service_1.default.getWhere({ roomId: req.body.roomId, date: new Date(req.body.dateOnly), timeIn: null, timeOut: null });
-                    const dailyBookingCheckDT = yield booking_daily_service_1.default.getWhere({ roomId: req.body.roomId, date: new Date(req.body.dateTime), timeIn: { [sequelize_1.Op.not]: null }, timeOut: { [sequelize_1.Op.not]: null } });
+                    console.log(req.body);
+                    const dailyBookingCheckD = yield booking_daily_service_1.default.getWhere({ roomId: req.body.roomId, date: new Date(req.body.dateOnly), timeIn: null, timeOut: null, orderId: req.body.orderId });
+                    const dailyBookingCheckDT = yield booking_daily_service_1.default.getWhere({ roomId: req.body.roomId, date: new Date(req.body.dateTime), timeIn: { [sequelize_1.Op.not]: null }, timeOut: { [sequelize_1.Op.not]: null }, orderId: req.body.orderId });
                     if (dailyBookingCheckD.length > 0) {
                         const roomId = req.body.roomId;
                         const date = req.body.dateOnly;
@@ -68,11 +68,11 @@ class DailyBookingsController {
                             });
                             if (lastEndTime < intTimeIn) {
                                 //  await BookingDailyService.update(dailyBookingCheckD[0].id, {roomId, date, quantity });
-                                yield booking_daily_service_1.default.create({ roomId: req.body.roomId, date: req.body.dateOnly, timeIn: req.body.timeIn, timeOut: req.body.timeOut, quantity: parseInt(req.body.quantity) });
+                                yield booking_daily_service_1.default.create({ roomId: req.body.roomId, date: req.body.dateOnly, timeIn: req.body.timeIn, timeOut: req.body.timeOut, quantity: parseInt(req.body.quantity), orderId: req.body.orderId });
                             }
                             else {
-                                yield booking_daily_service_1.default.update(dailyBookingCheckD[0].id, { roomId, date, quantity });
-                                yield booking_daily_service_1.default.create({ roomId: req.body.roomId, date: req.body.dateOnly, timeIn: req.body.timeIn, timeOut: req.body.timeOut, quantity: parseInt(req.body.quantity) });
+                                yield booking_daily_service_1.default.update(dailyBookingCheckD[0].id, { roomId, date, quantity, orderId: req.body.orderId });
+                                yield booking_daily_service_1.default.create({ roomId: req.body.roomId, date: req.body.dateOnly, timeIn: req.body.timeIn, timeOut: req.body.timeOut, quantity: parseInt(req.body.quantity), orderId: req.body.orderId });
                             }
                         }
                         return res.status(200).json({
@@ -81,8 +81,8 @@ class DailyBookingsController {
                         });
                     }
                     else {
-                        yield booking_daily_service_1.default.create({ roomId: req.body.roomId, date: req.body.dateOnly, timeIn: null, timeOut: null, quantity: 1 });
-                        yield booking_daily_service_1.default.create({ roomId: req.body.roomId, date: req.body.dateOnly, timeIn: req.body.timeIn, timeOut: req.body.timeOut, quantity: parseInt(req.body.quantity) });
+                        yield booking_daily_service_1.default.create({ roomId: req.body.roomId, date: req.body.dateOnly, timeIn: null, timeOut: null, quantity: 1, orderId: req.body.orderId });
+                        yield booking_daily_service_1.default.create({ roomId: req.body.roomId, date: req.body.dateOnly, timeIn: req.body.timeIn, timeOut: req.body.timeOut, quantity: parseInt(req.body.quantity), orderId: req.body.orderId });
                         return res.status(200).json({
                             message: "Hourly Booking added successfully. Not Exists",
                             // data: savedDailyBooking
@@ -96,14 +96,14 @@ class DailyBookingsController {
                         const roomId = req.body.roomId;
                         const date = req.body.dateOnly;
                         const quantity = (parseInt(req.body.quantity) + dailyBookingCheck[0].quantity);
-                        const savedDailyBooking = yield booking_daily_service_1.default.update(dailyBookingCheck[0].id, { roomId, date, quantity });
+                        const savedDailyBooking = yield booking_daily_service_1.default.update(dailyBookingCheck[0].id, { roomId, date, quantity, orderId: req.body.orderId });
                         return res.status(200).json({
                             message: "Daily Booking added successfully. Exists",
                             data: savedDailyBooking
                         });
                     }
                     else {
-                        const savedDailyBooking = yield booking_daily_service_1.default.create({ roomId: req.body.roomId, date: req.body.dateOnly, timeIn: null, timeOut: null, quantity: parseInt(req.body.quantity) });
+                        const savedDailyBooking = yield booking_daily_service_1.default.create({ roomId: req.body.roomId, date: req.body.dateOnly, timeIn: null, timeOut: null, quantity: parseInt(req.body.quantity), orderId: req.body.orderId });
                         return res.status(200).json({
                             message: "Daily Booking added successfully. Not Exists",
                             data: savedDailyBooking
